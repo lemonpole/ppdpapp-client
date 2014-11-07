@@ -1,0 +1,125 @@
+// out: ../css/styles.css, compress:true
+
+//----------------------------------------------
+// Import files below
+//----------------------------------------------
+@import "bootstrap/bootstrap.less";
+@import (reference) "core/variables.less";
+@import "core/fonts.less";
+@import (reference) "core/functions.less";
+@import "core/helpers.less";
+
+
+
+
+
+//----------------------------------------------
+// Style the elements.
+//----------------------------------------------
+/* Global Styles */
+html { font-size:10px; }
+body {
+	background-color:@base_bgcolor; margin-top:@navbar-height + @navbar-margin-bottom;
+	font-family:'Droid Sans', Arial, sans-serif;
+	color:@base_fontcolor; font-size:1.4em;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family:'Bebas Neue', Verdana, sans-serif;
+	& > small { display:block; color:@base_fontcolor; }
+}
+h1 { font-size:3.2em; }
+h2 { font-size:2.4em; }
+h3 { font-size:2em; }
+h4 { font-size:1.89em; }
+h5 { font-size:1.6em; }
+h6 { font-size:1.4em; }
+a {
+	text-decoration:none; color:@cherry_red;
+	&:hover { color:@cherry_red; }
+}
+
+/* Main navbar */
+.navbar-cherry {
+	background-color: @cherry_red;
+	border-color: @cherry_red_dark; border-radius:0;
+	
+	.navbar-brand, .navbar-text {
+		color:@base_bgcolor;
+		font-family:'Open Sans Condensed', 'Arial Narrow', sans-serif;
+		text-transform:uppercase; font-weight:700;	
+	}
+}
+
+/* Login form */
+#form-login {
+	input.form-control { height:auto; padding:10px; }
+	input[type="email"] { border-bottom-left-radius:0; border-bottom-right-radius:0; }
+	input[type="password"] { border-top-left-radius:0; border-top-right-radius:0; border-top:0; }
+}
+
+/* Route animator */
+#fader-container {
+	position:relative; min-height:300px;
+
+	.fader {
+		position:absolute; top:0; left:0; right:0;
+		height:100%; opacity:1;
+
+		&.ng-enter, &.ng-leave {
+			-webkit-transition:all 0.2s ease;
+			-moz-transition:all 0.2s ease;
+			-o-transition:all 0.2s ease;
+			transition:all 0.2s ease;
+		}
+		&.ng-enter { opacity:0; }
+		&.ng-enter-active { opacity:1; }
+		&.ng-leave { opacity:1; }
+		&.ng-leave-active { opacity:0; }
+	}
+}
+
+/* Temple network - footer. */
+footer {
+	background-color:@base_fontcolor; margin-top:@navbar-height;
+	border-top:@mp_small+5 solid @footer_dark;
+	color:@base_bgcolor;
+	
+	a {
+		color:@base_bgcolor;
+		&:hover { text-decoration:none; }
+	}
+	#footer-top {
+		padding:@mp_large 0;
+		
+		#footer-left {
+			img { position:absolute; }
+			&>div {
+				padding-left:@mp_small*5;
+				
+				h1, h2 { margin:0; }
+				p { margin-top:@mp_small; }
+			}
+		}
+		#footer-right {
+			div+div {
+				margin-top:@mp_medium;
+				a+a { margin-left:@mp_xsmall; }
+			}
+		}
+	}
+	#footer-bottom {
+		background-color:@black;
+		padding:@mp_large 0;
+		
+		ul {
+			list-style-type:none;
+			
+			li {
+				display:inline; padding:0 @mp_small; text-transform:uppercase;
+				
+				a > span { display:none; }
+				ul { display:none; }
+			}
+		}
+	}
+}

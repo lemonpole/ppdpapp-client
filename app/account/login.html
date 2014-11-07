@@ -1,0 +1,21 @@
+<div class="container">
+	<form name="form_login" id="form-login" role="form">
+		<div class="row"><div class="col-md-8 col-md-push-4">
+			<h1>Please log in<small>PA Policy Project Content Management</small></h1>
+		</div></div>
+		
+		<div class="row"><div class="col-md-4 col-md-push-4">
+			<input ng-model="account.email" name="email" type="email" class="form-control" placeholder="Email address" required autofocus />
+			<input ng-model="account.password" name="password" type="password" class="form-control" placeholder="Password" required />
+			
+			<button ng-click="login()" ng-disabled="form_login.$invalid||processing" class="btn btn-lg btn-primary btn-block margin-top-medium" type="submit">
+				<span class="padding-right-xsmall">Log in</span>
+				<i ng-show="processing" class="fa fa-spinner fa-spin"></i>
+			</button>
+		</div></div>
+		
+		<div ng-show="error" class="row margin-top-medium"><div class="col-md-4 col-md-push-4">
+			<alert type="danger" close="closeAlert()">{{error}}</alert>
+		</div></div>
+	</form>
+</div>
