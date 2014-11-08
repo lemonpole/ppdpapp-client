@@ -19,7 +19,7 @@
 /* Global Styles */
 html { font-size:10px; }
 body {
-	background-color:@base_bgcolor; margin-top:@navbar-height + @navbar-margin-bottom;
+	background-color:@base_bgcolor; margin-top:@navbar-height;
 	font-family:'Droid Sans', Arial, sans-serif;
 	color:@base_fontcolor; font-size:1.4em;
 }
@@ -40,8 +40,8 @@ a {
 
 /* Main navbar */
 .navbar-cherry {
-	background-color: @cherry_red;
-	border-color: @cherry_red_dark; border-radius:0;
+	background-color: @cherry_red; border-color: @cherry_red_dark; border-radius:0;
+	margin-bottom:0 !important;
 	
 	.navbar-brand, .navbar-text {
 		color:@base_bgcolor;
@@ -59,7 +59,7 @@ a {
 
 /* Route animator */
 #fader-container {
-	position:relative; min-height:300px;
+	position:relative; min-height:@body_min_height;
 
 	.fader {
 		position:absolute; top:0; left:0; right:0;
@@ -75,6 +75,29 @@ a {
 		&.ng-enter-active { opacity:1; }
 		&.ng-leave { opacity:1; }
 		&.ng-leave-active { opacity:0; }
+	}
+}
+
+/* main page navigation */
+ul#navigation {
+	background-color:@white; min-height:@body_min_height; height:100%;
+	padding-left:0; padding-right:0; list-style-type:none;
+	border-right:1px solid @base_bordercolor;
+	
+	li {
+		border-bottom:1px solid @base_bordercolor;
+		
+		&:hover {
+			border-left:@mp_xsmall solid @ash_gray;
+			background-color:@white_alt;
+			& > a { padding-left:@mp_small + @mp_xsmall; }
+		}
+		& > a {
+			display:block; width:100%;
+			padding:@mp_small @mp_medium;
+			
+			&:hover { text-decoration:none; }
+		}
 	}
 }
 
