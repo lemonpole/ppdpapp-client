@@ -1,6 +1,6 @@
 var app = angular.module('ppdpapp.v2', [
 	'ngRoute', 'ngAnimate', 'ui.bootstrap',
-	'ppdpappFactories', 'account'
+	'ppdpappFactories', 'account', 'assignments'
 ]);
 
 app.config(['$routeProvider', '$provide', '$animateProvider', function($routeProvider, $provide, $animateProvider){
@@ -12,7 +12,7 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 		controller: 'appCtrl',
 		resolve: {
 			authenticated: function(authFactory){
-				return authFactory.isLoggedIn();	
+				return authFactory.resolveIsLoggedIn();	
 			}
 		}
 	});
@@ -27,7 +27,5 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 }]);
 
 app.controller('appCtrl', ['$scope', function($scope){
-	// assignments page will be the home page.
-	// if an administrator, show all assignments.
-	// otherwise, show assignments pertaining to current user.
+	// do work
 }]);

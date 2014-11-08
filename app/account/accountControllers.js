@@ -13,7 +13,7 @@ acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPIFactory',
 		accountAPIFactory.postLogin($scope.account.email, $scope.account.password).success(function(token){
 			authInfo.token = token;
 			authInfo.email = $scope.account.email;
-			$location.path('/');
+			$location.path('/assignments');
 		}).error(function(error){
 			$scope.error = error;
 		}).finally(function(){
