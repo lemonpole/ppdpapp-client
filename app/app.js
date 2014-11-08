@@ -27,5 +27,7 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 }]);
 
 app.controller('appCtrl', ['$scope', function($scope){
-	console.log('hello, world!');
+	// assignments page will be the home page.
+	// if an administrator, show all assignments.
+	// otherwise, show assignments pertaining to current user.
 }]);

@@ -7,6 +7,10 @@ auth.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $locati
 		var deferred = $q.defer();
 		var authenticated = true;
 		
+		// enable the two lines below for debugging.
+		deferred.resolve();
+		return deferred.promise;
+		
 		// check if global token var is set.
 		// check that token corresponds to current user or that it did not expire.
 		// redirect to appropriate route.
