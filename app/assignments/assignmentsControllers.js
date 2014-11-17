@@ -1,8 +1,12 @@
-var acct = angular.module('assignmentsControllers', []);
+var acct = angular.module('assignmentsControllers', ['assignmentsFactory']);
 
-acct.controller('assignmentsCtrl', ['$scope', function($scope){
+acct.controller('assignmentsCtrl', ['$scope', 'assignmentsAPI', 'authInfo', function($scope, assignmentsAPI, authInfo){
 	// assignments page will be the home page.
 	// if an administrator, show all assignments.
 	// otherwise, show assignments pertaining to current user.
-	console.log('hello, world.');
+	$scope.assignments = null;
+    
+    assignmentsAPI.getAll(authInfo.token).success(function(res){
+      $scope.assignments = res;  
+    });
 }]);
