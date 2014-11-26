@@ -59,7 +59,7 @@ a {
 
 /* Route animator */
 #fader-container {
-	position:relative; min-height:@body_min_height;
+	position:relative; height:@body_max_height;
 
 	.fader {
 		position:absolute; top:0; left:0; right:0;
@@ -99,6 +99,11 @@ ul#navigation {
 			&:hover { text-decoration:none; }
 		}
 	}
+}
+
+/* generic data grid */
+.grid {
+    width:100%; height:@body_max_height - 100px;
 }
 
 /* Temple network - footer. */
