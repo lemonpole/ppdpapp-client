@@ -1,6 +1,6 @@
 var acct = angular.module('assignmentsControllers', ['assignmentsFactory', 'ui.grid.selection']);
 
-acct.controller('assignmentsCtrl', ['$scope', 'assignmentsAPI', 'authInfo', function($scope, assignmentsAPI, authInfo){
+acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'authInfo', function($scope, $location, assignmentsAPI, authInfo){
     // http://ui-grid.info/docs/#/tutorial/205_row_editable
     // http://ui-grid.info/docs/#/tutorial/215_paging
     $scope.gridAssignments = {
@@ -23,6 +23,7 @@ acct.controller('assignmentsCtrl', ['$scope', 'assignmentsAPI', 'authInfo', func
         loadBatch: function(batchObj){
             // redirect to batch viewer page.
             // this is the same as any documents page.
+            $location.path('/documents/newsclips/batch/' + batchObj.batchID);
         }
     };
     
