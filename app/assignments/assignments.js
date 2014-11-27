@@ -10,4 +10,14 @@ acct.config(['$routeProvider', function($routeProvider){
 			}
 		}
 	});
+    
+    $routeProvider.when('/assignments/:batch_id', {
+		templateUrl	: 'app/assignments/assignments_view.html',
+		controller	: 'assignmentsViewCtrl',
+		resolve: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
 }]);

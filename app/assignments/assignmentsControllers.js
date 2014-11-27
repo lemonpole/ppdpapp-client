@@ -22,8 +22,7 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'au
     $scope.gridAssignmentsScope = {
         loadBatch: function(batchObj){
             // redirect to batch viewer page.
-            // this is the same as any documents page.
-            $location.path('/documents/newsclips/batch/' + batchObj.batchID);
+            $location.path('/assignments/' + batchObj.batchID);
         }
     };
     
@@ -33,4 +32,8 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'au
             console.log(row.entity.batchID);
         });
     };
+}]);
+
+acct.controller('assignmentsViewCtrl', ['$scope', '$routeParams', 'assignmentsAPI', 'authInfo', function($scope, $routeParams, assignmentsAPI, authInfo){
+    console.log($routeParams.batch_id);
 }]);
