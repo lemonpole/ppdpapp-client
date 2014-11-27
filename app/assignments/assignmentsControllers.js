@@ -23,7 +23,7 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'au
         loadBatch: function(batchObj){
             // redirect to batch viewer page.
             // this is the same as any documents page.
-            $location.path('/documents/newsClips/batch/' + batchObj.batchID);
+            $location.path('/documents/newsclips/batch/' + batchObj.batchID);
         }
     };
     
