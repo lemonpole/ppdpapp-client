@@ -84,15 +84,26 @@ ul#navigation {
 	padding-left:0; padding-right:0; list-style-type:none;
 	border-right:1px solid @base_bordercolor;
 	
+    & > li {
+        border-bottom:1px solid @base_bordercolor;
+        
+        &:hover {
+			& > a { padding-left:@mp_small + @mp_xsmall; }
+            & > ul > li { margin-left:-@mp_xsmall; }
+		}
+        & > ul {
+            list-style-type:none; padding-left:@mp_small;
+            
+            &:hover { padding-left:@mp_xsmall; border-left:@mp_xsmall solid @ash_gray; }
+            & > li:last-child { border-bottom:0; }
+        }
+    }
 	li {
-		border-bottom:1px solid @base_bordercolor;
-		
-		&:hover {
+        &:hover {
 			border-left:@mp_xsmall solid @ash_gray;
 			background-color:@white_alt;
-			& > a { padding-left:@mp_small + @mp_xsmall; }
-		}
-		& > a {
+        }
+        & > a {
 			display:block; width:100%;
 			padding:@mp_small @mp_medium;
 			
