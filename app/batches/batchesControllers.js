@@ -16,3 +16,9 @@ batches.controller('batchesCtrl', ['$scope', 'batchesAPI', 'authInfo', function(
         $scope.gridOptions.data = res;
     });
 }]);
+
+batches.controller('createBatchCtrl', ['$scope', 'batchesAPI', 'authInfo', function($scope, batchesAPI, authInfo){
+    // name of batch
+    // type of batch
+    // date due
+}]);
