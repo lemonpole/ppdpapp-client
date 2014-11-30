@@ -60,10 +60,10 @@ a {
 
 /* Route animator */
 #fader-container {
-	position:relative; height:@body_max_height;
+	position:relative; height:auto;
 
 	.fader {
-		position:absolute; top:0; left:0; right:0;
+		position:relative; top:0; left:0; right:0;
 		height:100%; opacity:1;
 
 		&.ng-enter, &.ng-leave {
@@ -81,7 +81,7 @@ a {
 
 /* main page navigation */
 ul#navigation {
-	background-color:@white; height:@body_max_height;
+	background-color:@white; height:100vh;
 	padding-left:0; padding-right:0; list-style-type:none;
 	border-right:1px solid @base_bordercolor;
 	
