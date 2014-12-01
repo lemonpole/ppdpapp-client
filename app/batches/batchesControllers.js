@@ -21,4 +21,14 @@ batches.controller('createBatchCtrl', ['$scope', 'batchesAPI', 'authInfo', funct
     // name of batch
     // type of batch
     // date due
+    $scope.minDate = new Date();
+    
+    $scope.today = function(){
+        $scope.dt = new Date();
+    };
+    $scope.today();
+    
+    $scope.clear = function(){
+        $scope.dt = null;
+    };
 }]);
