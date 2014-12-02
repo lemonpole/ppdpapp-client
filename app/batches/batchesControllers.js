@@ -1,20 +1,31 @@
 var batches = angular.module('batchesControllers', ['batchesFactory']);
 
-batches.controller('batchesCtrl', ['$scope', 'batchesAPI', 'authInfo', function($scope, batchesAPI, authInfo){
+batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
     $scope.gridOptions = {
         enableSorting: true,
-        enableRowSelection: true,
-        multiSelect: true,
         columnDefs: [
             { name: 'Created By', field: 'creator' },
             { name: 'Date Added', field: 'dateAdded' },
-            { name: 'Date Due', field: 'dateDue' }
+            { name: 'Date Due', field: 'dateDue' },
+            { name: 'View', cellTemplate: '<button class="btn btn-default btn-xs" ng-click="getExternalScopes().loadBatch(row.entity)">View</button>' }
         ]
     };
     
     batchesAPI.getAll(authInfo.token).success(function(res){
         $scope.gridOptions.data = res;
     });
+    
+    $scope.gridScope = {
+        loadBatch: function(batchObj){
+            $location.path('/batches/' + batchObj.batchID);
+        }
+    };
+}]);
+
+batches.controller('viewBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+    // load the current users assigned to this batch.
+    // load the documents assigned to this batch.
+    // or load all documents and mark those that have been assigned to current batch.
 }]);
 
 batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
