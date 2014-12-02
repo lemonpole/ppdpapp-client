@@ -11,19 +11,9 @@ batches.config(['$routeProvider', function($routeProvider){
 		}
 	});
     
-    $routeProvider.when('/batches/:batch_id', {
-		templateUrl	: 'app/batches/batch_view.html',
-		controller	: 'batchViewCtrl',
-		resolve: {
-			authenticated: function(authFactory){
-				return authFactory.resolveIsLoggedIn();	
-			}
-		}
-	});
-    
-    $routeProvider.when('/batches/:batch_id/add/users', {
-		templateUrl	: 'app/batches/batch_add_users.html',
-		controller	: 'batchAddUsersCtrl',
+    $routeProvider.when('/batches/:batch_id/view/users', {
+		templateUrl	: 'app/batches/batch_view_users.html',
+		controller	: 'batchViewUsersCtrl',
 		resolve: {
 			authenticated: function(authFactory){
 				return authFactory.resolveIsLoggedIn();	

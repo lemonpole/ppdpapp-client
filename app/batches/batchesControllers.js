@@ -1,4 +1,4 @@
-var batches = angular.module('batchesControllers', ['batchesFactory']);
+var batches = angular.module('batchesControllers', ['batchesFactory', 'usersFactory']);
 
 batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
     $scope.gridOptions = {
@@ -19,20 +19,25 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
         load: function(batchObj){
             $location.path('/batches/' + batchObj.batchID);
         },
-        addUsers: function(batchObj){
-            $location.path('/batches/' + batchObj.batchID + '/add/users');   
+        viewUsers: function(batchObj){
+            $location.path('/batches/' + batchObj.batchID + '/view/users');   
         }
     };
 }]);
 
-batches.controller('batchViewCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
-    // load the current users assigned to this batch.
-    // load the documents assigned to this batch.
-    // or load all documents and mark those that have been assigned to current batch.
-}]);
-
-batches.controller('batchAddUsersCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
-    // do work.
+batches.controller('batchViewUsersCtrl', ['$scope', '$location', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, batchesAPI,  usersAPI, authInfo){
+    // list current users.
+    // list all users.
+    $scope.gridUsersOptions = {
+        columnDefs: [
+            { field: 'email' },
+            { field: 'firstName' },
+            { field: 'lastName' }
+        ]
+    };
+    usersAPI.getAll(authInfo.token).success(function(res){
+        $scope.gridUsersOptions.data = res;
+    });
 }]);
 
 batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
