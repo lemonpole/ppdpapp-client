@@ -17,18 +17,27 @@ batches.controller('batchesCtrl', ['$scope', 'batchesAPI', 'authInfo', function(
     });
 }]);
 
-batches.controller('createBatchCtrl', ['$scope', 'batchesAPI', 'authInfo', function($scope, batchesAPI, authInfo){
-    // name of batch
-    // type of batch
-    // date due
+batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+    $scope.dt = new Date();
     $scope.minDate = new Date();
     
     $scope.today = function(){
         $scope.dt = new Date();
     };
-    $scope.today();
-    
     $scope.clear = function(){
         $scope.dt = null;
+    };
+    $scope.create = function(){
+        var batchObj = {};
+        batchObj.fileID = null;
+        batchObj.name = $scope.name;
+        batchObj.dateAdded = new Date();
+        batchObj.creator = authInfo.email;
+        batchObj.dateDue = $scope.dt;
+        batchObj.users = null;
+        
+        batchesAPI.create(authInfo.token, batchObj).success(function(res){
+            $location.path('/batches/');
+        });
     };
 }]);
