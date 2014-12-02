@@ -20,6 +20,7 @@ batches.controller('batchesCtrl', ['$scope', 'batchesAPI', 'authInfo', function(
 batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
     $scope.dt = new Date();
     $scope.minDate = new Date();
+    $scope.processing = false;
     
     $scope.today = function(){
         $scope.dt = new Date();
@@ -28,6 +29,8 @@ batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'aut
         $scope.dt = null;
     };
     $scope.create = function(){
+        $scope.processing = true;
+        
         var batchObj = {};
         batchObj.fileID = null;
         batchObj.name = $scope.name;
@@ -37,6 +40,7 @@ batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'aut
         batchObj.users = null;
         
         batchesAPI.create(authInfo.token, batchObj).success(function(res){
+            $scope.processing = false;
             $location.path('/batches/');
         });
     };
