@@ -22,13 +22,13 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
     };
 }]);
 
-batches.controller('viewBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+batches.controller('batchViewCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
     // load the current users assigned to this batch.
     // load the documents assigned to this batch.
     // or load all documents and mark those that have been assigned to current batch.
 }]);
 
-batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
     $scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
