@@ -7,7 +7,7 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
             { name: 'Created By', field: 'creator' },
             { name: 'Date Added', field: 'dateAdded' },
             { name: 'Date Due', field: 'dateDue' },
-            { name: 'View', cellTemplate: '<button class="btn btn-default btn-xs" ng-click="getExternalScopes().loadBatch(row.entity)">View</button>' }
+            { name: 'View', cellTemplate: 'app/batches/partials/cellTemplate_batches.html' }
         ]
     };
     
