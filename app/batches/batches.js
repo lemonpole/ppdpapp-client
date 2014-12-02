@@ -21,6 +21,16 @@ batches.config(['$routeProvider', function($routeProvider){
 		}
 	});
     
+    $routeProvider.when('/batches/:batch_id/add/users', {
+		templateUrl	: 'app/batches/batch_add_users.html',
+		controller	: 'batchAddUsersCtrl',
+		resolve: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
+    
     $routeProvider.when('/batches/create', {
 		templateUrl	: 'app/batches/batch_create.html',
 		controller	: 'batchCreateCtrl',

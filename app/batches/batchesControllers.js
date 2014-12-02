@@ -16,8 +16,11 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
     });
     
     $scope.gridScope = {
-        loadBatch: function(batchObj){
+        load: function(batchObj){
             $location.path('/batches/' + batchObj.batchID);
+        },
+        addUsers: function(batchObj){
+            $location.path('/batches/' + batchObj.batchID + '/add/users');   
         }
     };
 }]);
@@ -26,6 +29,10 @@ batches.controller('batchViewCtrl', ['$scope', '$location', 'batchesAPI', 'authI
     // load the current users assigned to this batch.
     // load the documents assigned to this batch.
     // or load all documents and mark those that have been assigned to current batch.
+}]);
+
+batches.controller('batchAddUsersCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+    // do work.
 }]);
 
 batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
