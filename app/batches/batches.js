@@ -10,4 +10,14 @@ batches.config(['$routeProvider', function($routeProvider){
 			}
 		}
 	});
+    
+    $routeProvider.when('/batches/create', {
+		templateUrl	: 'app/batches/create_batch.html',
+		controller	: 'createBatchCtrl',
+		resolve: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
 }]);

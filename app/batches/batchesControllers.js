@@ -16,3 +16,32 @@ batches.controller('batchesCtrl', ['$scope', 'batchesAPI', 'authInfo', function(
         $scope.gridOptions.data = res;
     });
 }]);
+
+batches.controller('createBatchCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+    $scope.dt = new Date();
+    $scope.minDate = new Date();
+    $scope.processing = false;
+    
+    $scope.today = function(){
+        $scope.dt = new Date();
+    };
+    $scope.clear = function(){
+        $scope.dt = null;
+    };
+    $scope.create = function(){
+        $scope.processing = true;
+        
+        var batchObj = {};
+        batchObj.fileID = null;
+        batchObj.name = $scope.name;
+        batchObj.dateAdded = new Date();
+        batchObj.creator = authInfo.email;
+        batchObj.dateDue = $scope.dt;
+        batchObj.users = null;
+        
+        batchesAPI.create(authInfo.token, batchObj).success(function(res){
+            $scope.processing = false;
+            $location.path('/batches/');
+        });
+    };
+}]);

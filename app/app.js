@@ -1,6 +1,7 @@
 var app = angular.module('ppdpapp.v2', [
 	'ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.grid',
-	'ppdpappFactories', 'account', 'assignments', 'newsclips', 'batches', 'users'
+	'ppdpappDirectives', 'ppdpappFactories',
+    'account', 'assignments', 'newsclips', 'batches', 'users'
 ]);
 
 app.config(['$routeProvider', '$provide', '$animateProvider', function($routeProvider, $provide, $animateProvider){

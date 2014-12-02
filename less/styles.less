@@ -26,6 +26,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-family:'Bebas Neue', Verdana, sans-serif;
 	& > small { display:block; color:@base_fontcolor; }
+    & > button, & > a.btn { font-family:'Droid Sans', Arial, sans-serif; }
 }
 h1 { font-size:3.2em; }
 h2 { font-size:2.4em; }
@@ -59,10 +60,10 @@ a {
 
 /* Route animator */
 #fader-container {
-	position:relative; height:@body_max_height;
+	position:relative; height:auto;
 
 	.fader {
-		position:absolute; top:0; left:0; right:0;
+		position:relative; top:0; left:0; right:0;
 		height:100%; opacity:1;
 
 		&.ng-enter, &.ng-leave {
@@ -80,7 +81,7 @@ a {
 
 /* main page navigation */
 ul#navigation {
-	background-color:@white; height:@body_max_height;
+	background-color:@white; height:100vh;
 	padding-left:0; padding-right:0; list-style-type:none;
 	border-right:1px solid @base_bordercolor;
 	
@@ -114,7 +115,7 @@ ul#navigation {
 
 /* generic data grid */
 .grid {
-    width:100%; height:@body_max_height - 100px;
+    width:100%; height:@grid_height;
 }
 
 /* Temple network - footer. */
