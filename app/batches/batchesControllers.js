@@ -25,19 +25,45 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
     };
 }]);
 
-batches.controller('batchViewUsersCtrl', ['$scope', '$location', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, batchesAPI,  usersAPI, authInfo){
-    // list current users.
-    // list all users.
-    $scope.gridUsersOptions = {
-        columnDefs: [
-            { field: 'email' },
-            { field: 'firstName' },
-            { field: 'lastName' }
-        ]
+batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, batchesAPI,  usersAPI, authInfo){
+    $scope.processing_add = false;
+    
+    var columnDefs = [
+        { field: 'email' },
+        { field: 'firstName' },
+        { field: 'lastName' }
+    ];
+    $scope.gridBatchUsersOptions = {
+        columnDefs: columnDefs
     };
+    $scope.gridUsersOptions = {
+        columnDefs: columnDefs,
+        enableRowSelection: true,
+        enableSelectAll: true,
+        multiSelect: true
+    };
+    
+    batchesAPI.getUsers(authInfo.token, $routeParams.batch_id).success(function(res){
+       $scope.gridBatchUsersOptions.data = res; 
+    });
     usersAPI.getAll(authInfo.token).success(function(res){
         $scope.gridUsersOptions.data = res;
     });
+    
+    $scope.gridUsersOptions.onRegisterApi = function(gridApi){ 
+        $scope.gridApi = gridApi;
+    };
+    $scope.addSelected = function(){
+        //$scope.processing_add = true;
+        var selectedRows = $scope.gridApi.selection.getSelectedRows();
+        
+        for(var i=0; i<selectedRows.length; i++){
+            // call api. on success continue. on fail, do nothing.
+            batchesAPI.addUser(authInfo.token, $routeParams.batch_id, selectedRows[i]).success(function(res){
+                // do work.
+            });
+        }
+    };
 }]);
 
 batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
