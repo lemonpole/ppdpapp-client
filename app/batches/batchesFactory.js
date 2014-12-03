@@ -16,6 +16,9 @@ batches.factory('batchesAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.addUser = function(token, id, userObj){
         return $http.post(urlBase + '/' + id + '/add/user?token=' + token, userObj); 
     };
+    dataFactory.delete = function(token, id){
+        return $http.delete(urlBase + '/' + id + '?token=' + token);
+    }
     
 	return dataFactory;
 }]);
