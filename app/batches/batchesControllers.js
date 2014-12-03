@@ -40,7 +40,6 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
         }
     };
 }]);
-
 batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, batchesAPI,  usersAPI, authInfo){
     $scope.processing_add = false;
     $scope.batchUsersGridApi = null;
@@ -101,7 +100,6 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         }
     };
 }]);
-
 batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
     $scope.dt = new Date();
     $scope.minDate = new Date();
