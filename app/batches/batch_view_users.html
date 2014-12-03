@@ -14,7 +14,11 @@
 		
 		<div class="col-md-5">
             <h1>Current Users</h1>
-            <div ui-grid="gridBatchUsersOptions" class="grid"></div>
+            <div ui-grid="gridBatchUsersOptions" ui-grid-selection class="grid"></div>
+            <button type="button" class="btn btn-primary" ng-click="deleteSelected()" ng-disabled="processing_del">
+                Delete User(s)
+                <i ng-show="processing_del" class="fa fa-spinner fa-spin"></i>
+            </button>
 		</div>
         
         <div class="col-md-5">

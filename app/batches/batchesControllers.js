@@ -43,6 +43,8 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
 
 batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, batchesAPI,  usersAPI, authInfo){
     $scope.processing_add = false;
+    $scope.batchUsersGridApi = null;
+    $scope.usersGridApi = null;
     
     var columnDefs = [
         { field: 'email' },
@@ -50,7 +52,10 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         { field: 'lastName' }
     ];
     $scope.gridBatchUsersOptions = {
-        columnDefs: columnDefs
+        columnDefs: columnDefs,
+        enableRowSelection: true,
+        enableSelectAll: true,
+        multiSelect: true
     };
     $scope.gridUsersOptions = {
         columnDefs: columnDefs,
@@ -66,12 +71,27 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         $scope.gridUsersOptions.data = res;
     });
     
+    $scope.gridBatchUsersOptions.onRegisterApi = function(gridApi){ 
+        $scope.batchUsersGridApi = gridApi;
+    };
+    $scope.deleteSelected = function(){
+        var selectedRows = $scope.batchUsersGridApi.selection.getSelectedRows();
+        
+         for(var i=0; i<selectedRows.length; i++){
+            // call api. on success continue. on fail, do nothing.
+            batchesAPI.deleteUser(authInfo.token, $routeParams.batch_id, selectedRows[i]).success(function(res){
+                // do work.
+            });
+        }
+    };
+    
+    
     $scope.gridUsersOptions.onRegisterApi = function(gridApi){ 
-        $scope.gridApi = gridApi;
+        $scope.usersGridApi = gridApi;
     };
     $scope.addSelected = function(){
         //$scope.processing_add = true;
-        var selectedRows = $scope.gridApi.selection.getSelectedRows();
+        var selectedRows = $scope.usersGridApi.selection.getSelectedRows();
         
         for(var i=0; i<selectedRows.length; i++){
             // call api. on success continue. on fail, do nothing.
