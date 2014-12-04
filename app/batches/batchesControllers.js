@@ -100,11 +100,12 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         }
     };
 }]);
-batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+batches.controller('batchCreateCtrl', ['$scope', '$location', 'tablesAPI', 'batchesAPI', 'authInfo', function($scope, $location, tablesAPI, batchesAPI, authInfo){
     $scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
-    $scope.type_dd_status = false;
+    $scope.batch_type_dd_status = false;
+    $scope.batch_type = null;
     
     $scope.today = function(){
         $scope.dt = new Date();
@@ -114,7 +115,13 @@ batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'aut
     };
     
     // call tablesAPI to get table names.
-   
+    tablesAPI.getAll(authInfo.token).success(function(res){
+        $scope.batch_type_dd_items = res;
+    });
+    $scope.setBatchType = function(tableObj){
+        $scope.batch_type = tableObj;
+    };
+    
     $scope.create = function(){
         $scope.processing = true;
         
@@ -125,6 +132,7 @@ batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'aut
         batchObj.creator = authInfo.email;
         batchObj.dateDue = $scope.dt;
         batchObj.users = null;
+        batchObj.tablesID = $scope.batch_type.ID;
         
         batchesAPI.create(authInfo.token, batchObj).success(function(res){
             $scope.processing = false;
