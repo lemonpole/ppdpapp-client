@@ -33,6 +33,17 @@
                     </div>
                 </div>
                 
+                <div class="form-group row"><div class="col-md-12">
+                    <div class="btn-group" dropdown is-open="type_dd_status">
+                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-click='type_dd_status=!type_dd_status'>
+                            Select Batch Type <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="choice in type_dd_items"><a href>{{choice}}</a></li>
+                        </ul>
+                    </div>
+                </div></div>
+                
                 <div class="form-group margin-top-xlarge">
                     <button type="button" class="btn btn-primary" ng-click="create()" ng-disabled="form.$invalid||processing">
                         Create

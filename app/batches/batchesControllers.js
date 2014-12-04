@@ -104,6 +104,7 @@ batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'aut
     $scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
+    $scope.type_dd_status = false;
     
     $scope.today = function(){
         $scope.dt = new Date();
@@ -111,6 +112,9 @@ batches.controller('batchCreateCtrl', ['$scope', '$location', 'batchesAPI', 'aut
     $scope.clear = function(){
         $scope.dt = null;
     };
+    
+    // call tablesAPI to get table names.
+   
     $scope.create = function(){
         $scope.processing = true;
         
