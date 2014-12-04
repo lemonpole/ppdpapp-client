@@ -1,6 +1,6 @@
 var batches = angular.module('batchesControllers', ['batchesFactory', 'usersFactory']);
 
-batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInfo', function($scope, $location, batchesAPI, authInfo){
+batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'tablesAPI', 'authInfo', function($scope, $location, batchesAPI, tablesAPI, authInfo){
     $scope.processing = false;
     $scope.gridOptions = {
         enableSorting: true,
@@ -25,6 +25,11 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
         },
         viewUsers: function(batchObj){
             $location.path('/batches/' + batchObj.batchID + '/view/users');   
+        },
+        addDocs: function(batchObj){
+            tablesAPI.find(authInfo.token, batchObj.tablesID).success(function(res){
+            	$location.path('/batches/' + batchObj.batchID + '/add/' + res.TableName);
+            });
         }
     };
     $scope.gridOptions.onRegisterApi = function(gridApi){ 
@@ -34,9 +39,7 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'authInf
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
         
         for(var i=0; i<selectedRows.length; i++){
-            batchesAPI.delete(authInfo.token, selectedRows[i].batchID).success(function(res){
-                // do work.
-            });
+            batchesAPI.delete(authInfo.token, selectedRows[i].batchID).success(function(res){});
         }
     };
 }]);

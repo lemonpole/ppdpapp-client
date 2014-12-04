@@ -30,4 +30,15 @@ batches.config(['$routeProvider', function($routeProvider){
 			}
 		}
 	});
+    
+    $routeProvider.when('/batches/:batch_id/add/newsclips', {
+        templateUrl			: 'app/documents/newsclips/newsclips.html',
+		caseInsensitiveMatch: true,
+		controller			: 'newsclipsCtrl',
+		resolve				: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+    });
 }]);
