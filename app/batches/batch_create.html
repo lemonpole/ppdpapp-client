@@ -47,7 +47,7 @@
                 </div></div>
                 
                 <div class="form-group margin-top-xlarge">
-                    <button type="button" class="btn btn-primary" ng-click="create()" ng-disabled="form.$invalid||processing">
+                    <button type="button" class="btn btn-primary" ng-click="create()" ng-disabled="form.$invalid||processing||!batch_type.TableTitle">
                         Create
 				        <i ng-show="processing" class="fa fa-spinner fa-spin"></i>
                     </button>
