@@ -1,6 +1,6 @@
-var auth = angular.module('ppdpappFactories', []);
+var factories = angular.module('ppdpappFactories', []);
 
-auth.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $location, authInfo){
+factories.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $location, authInfo){
 	var dataFactory = {};
 	
 	dataFactory.resolveIsLoggedIn = function(){
@@ -24,5 +24,22 @@ auth.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $locati
 		return deferred.promise;
 	};
 	
+	return dataFactory;
+}]);
+
+factories.factory('tablesAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/tables';
+	
+	dataFactory.getAll = function(token){
+		return $http.get(urlBase + '?token=' + token);
+	};
+    dataFactory.getByName = function(token, name){
+        return $http.get(urlBase + '/name/' + name + '?token=' + token);  
+    };
+    dataFactory.find = function(token, id){
+        return $http.get(urlBase + '/id/' + id + '?token=' + token);  
+    };
+    
 	return dataFactory;
 }]);
