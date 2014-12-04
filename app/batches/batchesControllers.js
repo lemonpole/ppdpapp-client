@@ -131,7 +131,6 @@ batches.controller('batchCreateCtrl', ['$scope', '$location', 'tablesAPI', 'batc
         batchObj.dateAdded = new Date();
         batchObj.creator = authInfo.email;
         batchObj.dateDue = $scope.dt;
-        batchObj.users = null;
         batchObj.tablesID = $scope.batch_type.ID;
         
         batchesAPI.create(authInfo.token, batchObj).success(function(res){
