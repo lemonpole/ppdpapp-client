@@ -16,7 +16,7 @@ newsclips.controller('newsclipsCtrl', ['$scope', 'newsclipsAPI', 'authInfo', fun
         $scope.gridNewsclips.data = res;
     });
     
-    $scope.gridApi.onRegisterApi = function(gridApi){ 
+    $scope.gridNewsclips.onRegisterApi = function(gridApi){ 
         $scope.gridApi = gridApi;
     };
     $scope.myFunc = function(){
