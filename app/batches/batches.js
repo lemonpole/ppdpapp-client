@@ -31,7 +31,7 @@ batches.config(['$routeProvider', function($routeProvider){
 		}
 	});
     
-    $routeProvider.when('/batches/:batch_id/add/newsclips', {
+    $routeProvider.when('/batches/:batch_id/:action/newsclips', {
         templateUrl			: 'app/documents/newsclips/newsclips.html',
 		caseInsensitiveMatch: true,
 		controller			: 'newsclipsCtrl',
