@@ -14,7 +14,16 @@
 		
 		<div class="col-md-10">
 			<h1>Newsclips</h1>
-            <div ui-grid="gridNewsclips" class="grid" ppdpapp-init></div>
+            <div ui-grid="gridNewsclips" class="grid" ui-grid-selection></div>
+			
+			<button type="button" class="btn btn-primary" ng-click="doBatchAction('add')" ng-disabled="processing_adding_batch" ng-show="adding_batch">
+                Add to Batch
+                <i ng-show="processing_adding_batch" class="fa fa-spinner fa-spin"></i>
+            </button>
+			<button type="button" class="btn btn-primary" ng-click="doBatchAction('delete')" ng-disabled="processing_deleting_batch" ng-show="deleting_batch">
+                Delete from Batch
+                <i ng-show="processing_deleting_batch" class="fa fa-spinner fa-spin"></i>
+            </button>
 		</div>
 	</div>
 </div>

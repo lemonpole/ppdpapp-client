@@ -11,13 +11,34 @@ batches.config(['$routeProvider', function($routeProvider){
 		}
 	});
     
-    $routeProvider.when('/batches/create', {
-		templateUrl	: 'app/batches/create_batch.html',
-		controller	: 'createBatchCtrl',
+    $routeProvider.when('/batches/:batch_id/view/users', {
+		templateUrl	: 'app/batches/batch_view_users.html',
+		controller	: 'batchViewUsersCtrl',
 		resolve: {
 			authenticated: function(authFactory){
 				return authFactory.resolveIsLoggedIn();	
 			}
 		}
 	});
+    
+    $routeProvider.when('/batches/create', {
+		templateUrl	: 'app/batches/batch_create.html',
+		controller	: 'batchCreateCtrl',
+		resolve: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
+    
+    $routeProvider.when('/batches/:batch_id/:action/newsclips', {
+        templateUrl			: 'app/documents/newsclips/newsclips.html',
+		caseInsensitiveMatch: true,
+		controller			: 'newsclipsCtrl',
+		resolve				: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+    });
 }]);
