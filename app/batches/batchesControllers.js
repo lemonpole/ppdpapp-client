@@ -26,9 +26,9 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'tablesA
         viewUsers: function(batchObj){
             $location.path('/batches/' + batchObj.batchID + '/view/users');   
         },
-        addDocs: function(batchObj){
+        docsAction: function(batchObj, action){
             tablesAPI.find(authInfo.token, batchObj.tablesID).success(function(res){
-            	$location.path('/batches/' + batchObj.batchID + '/add/' + res.TableName);
+            	$location.path('/batches/' + batchObj.batchID + '/' + action + '/' + res.TableName);
             });
         }
     };

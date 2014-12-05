@@ -28,6 +28,9 @@ batches.factory('batchesAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.addDocument = function(token, batch_id, doc_id){
 		return $http.post(urlBase + '/' + batch_id + '/add/document/' + doc_id + '?token=' + token);
 	};
-    
+    dataFactory.deleteDocument = function(token, batch_id, doc_id){
+		return $http.delete(urlBase + '/' + batch_id + '/delete/document/' + doc_id + '?token=' + token);
+	};
+	
 	return dataFactory;
 }]);

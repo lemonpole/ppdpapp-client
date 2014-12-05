@@ -1,2 +1,4 @@
 <button class="btn btn-default btn-xs" ng-click="getExternalScopes().viewUsers(row.entity)">View/Add User(s)</button>
-<button class="btn btn-default btn-xs" ng-click="getExternalScopes().addDocs(row.entity)">Add Docs</button>
+<button class="btn btn-default btn-xs" ng-click="getExternalScopes().docsAction(row.entity, 'view')">View</button>
+<button class="btn btn-default btn-xs" ng-click="getExternalScopes().docsAction(row.entity, 'add')">Add Docs</button>
+<button class="btn btn-default btn-xs" ng-click="getExternalScopes().docsAction(row.entity, 'delete')">Del Docs</button>
