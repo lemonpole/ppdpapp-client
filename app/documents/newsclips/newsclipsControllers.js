@@ -1,6 +1,6 @@
-var newsclips = angular.module('newsclipsControllers', ['newsclipsFactory']);
+var newsclips = angular.module('newsclipsControllers', ['newsclipsFactory', 'batchesFactory']);
 
-newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, newsclipsAPI, authInfo){
+newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI', 'batchesAPI', 'authInfo', function($scope, $routeParams, newsclipsAPI, batchesAPI, authInfo){
     $scope.gridNewsclips = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -20,6 +20,8 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI',
 		if($routeParams.action == 'add'){
 			newsclipsAPI.noBatch(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
 			$scope.adding_batch = true;
+		} else if($routeParams.action == 'view'){
+			batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });
 		}
 	}
     

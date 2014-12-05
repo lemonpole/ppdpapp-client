@@ -13,6 +13,9 @@ batches.factory('batchesAPI', ['$http', 'apiRoot', function($http, apiRoot){
     dataFactory.getUsers = function(token, id){
         return $http.get(urlBase + '/' + id + '/users?token=' + token);
     };
+	dataFactory.getDocuments = function(token, id){
+		return $http.get(urlBase + '/' + id + '/documents?token=' + token);
+	};
 	dataFactory.addUser = function(token, id, userObj){
         return $http.post(urlBase + '/' + id + '/add/user?token=' + token, userObj); 
     };
