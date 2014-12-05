@@ -22,7 +22,6 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
     $scope.gridAssignmentsScope = {
         loadBatch: function(batchObj){
             // redirect to batch viewer page.
-            //$location.path('/batches/' + batchObj.batchID + '/view/' + );
 			tablesAPI.find(authInfo.token, batchObj.tablesID).success(function(res){
             	$location.path('/batches/' + batchObj.batchID + '/view/' + res.TableName);
             });
@@ -35,19 +34,4 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
             console.log(row.entity.batchID);
         });
     };
-}]);
-
-acct.controller('assignmentsViewCtrl', ['$scope', '$routeParams', 'assignmentsAPI', 'authInfo', function($scope, $routeParams, assignmentsAPI, authInfo){
-   $scope.gridOptions = {
-        enableSorting: true,
-        columnDefs: [
-            { field: 'Headline' },
-            { field: 'Abstract' },
-            { name: 'Newsclip Date', field: 'Date' }
-        ]
-    };
-    
-    assignmentsAPI.getDocuments(authInfo.token, $routeParams.batch_id).success(function(res){
-        $scope.gridOptions.data = res; 
-    });
 }]);
