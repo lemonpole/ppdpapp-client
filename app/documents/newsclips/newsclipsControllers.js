@@ -34,6 +34,7 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI',
         for(var i=0; i<selectedRows.length; i++){
 			// call api to add selectedRow to current batch.
 			// redirect to batch view.
+			batchesAPI.addDocument(authInfo.token, batch_id, selectedRows[i].ID).success(function(res){});
 		}
     };
 }]);
