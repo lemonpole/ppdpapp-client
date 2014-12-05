@@ -34,7 +34,7 @@ batches.config(['$routeProvider', function($routeProvider){
     $routeProvider.when('/batches/:batch_id/:action/newsclips', {
         templateUrl			: 'app/documents/newsclips/newsclips.html',
 		caseInsensitiveMatch: true,
-		controller			: 'newsclipsCtrl',
+		controller			: 'newsclipsBatchCtrl',
 		resolve				: {
 			authenticated: function(authFactory){
 				return authFactory.resolveIsLoggedIn();	
