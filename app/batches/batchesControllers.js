@@ -64,13 +64,19 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         enableSelectAll: true,
         multiSelect: true
     };
-    
-    batchesAPI.getUsers(authInfo.token, $routeParams.batch_id).success(function(res){
-       $scope.gridBatchUsersOptions.data = res; 
-    });
-    usersAPI.getAll(authInfo.token).success(function(res){
-        $scope.gridUsersOptions.data = res;
-    });
+	
+    $scope.reloadBatchUsers = function(){
+		batchesAPI.getUsers(authInfo.token, $routeParams.batch_id).success(function(res){
+			$scope.gridBatchUsersOptions.data = res;
+		});
+	};
+	$scope.reloadUsers = function(){
+		usersAPI.getAll(authInfo.token).success(function(res){
+			$scope.gridUsersOptions.data = res;
+		});
+	};
+    $scope.reloadBatchUsers();
+    $scope.reloadUsers();
     
     $scope.gridBatchUsersOptions.onRegisterApi = function(gridApi){ 
         $scope.batchUsersGridApi = gridApi;
@@ -86,7 +92,7 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
 		
 		$q.all(promises).then(function(){
 			$scope.processing_del = false;
-			$location.path('/batches/' + $routeParams.batch_id + '/view/users');
+			$scope.reloadBatchUsers();
 		});
     };
     
@@ -105,7 +111,7 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
 		
 		$q.all(promises).then(function(){
 			$scope.processing_add = false;
-			$location.path('/batches/' + $routeParams.batch_id + '/view/users');
+			$scope.reloadBatchUsers();
 		});
     };
 }]);
