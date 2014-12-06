@@ -15,6 +15,8 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI',
 	newsclipsAPI.getAll(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
 }]);
 newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$location', 'newsclipsAPI', 'batchesAPI', 'authInfo', function($scope, $routeParams, $q, $location, newsclipsAPI, batchesAPI, authInfo){
+	$scope.process_action = $routeParams.action;
+	$scope.processing_action = false;
 	$scope.gridNewsclips = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -25,8 +27,13 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
             { name: 'Newsclip Date', field: 'Date' }
         ]
     };
-	$scope.process_action = $routeParams.action;
-	$scope.processing_action = false;
+	
+	$scope.reloadNoBatch = function(){
+		newsclipsAPI.noBatch(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+	};
+	$scope.reloadBatchDocs = function(){
+		batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });	
+	};
 	
 	var batch_id = $routeParams.batch_id;
 	if(typeof batch_id === 'undefined'){
@@ -34,10 +41,10 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 	} else {
 		switch($routeParams.action){
 			case 'add':
-				newsclipsAPI.noBatch(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+				$scope.reloadNoBatch();
 				break;
 			case 'view':
-				batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });
+				$scope.reloadBatchDocs();
 				break;
 		}
 	}
@@ -64,7 +71,16 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		
 		$q.all(promises).then(function(){
 			$scope.processing_action = false;
-			$location.path('/batches/' + $routeParams.batch_id + '/view/newsclips');
+			//$location.path('/batches/' + $routeParams.batch_id + '/view/newsclips');
+			switch($routeParams.action){
+				case 'add':
+					$scope.reloadNoBatch();
+					break;
+				case 'view':
+				case 'delete':
+					$scope.reloadBatchDocs();
+					break;
+			}
 		});
     };
 }]);
