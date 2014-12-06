@@ -43,8 +43,7 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'tablesA
         }
     };
 }]);
-batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, batchesAPI,  usersAPI, authInfo){
-    $scope.processing_add = false;
+batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', '$q', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, $q, batchesAPI,  usersAPI, authInfo){
     $scope.batchUsersGridApi = null;
     $scope.usersGridApi = null;
     
@@ -78,13 +77,17 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
     };
     $scope.deleteSelected = function(){
         var selectedRows = $scope.batchUsersGridApi.selection.getSelectedRows();
-        
-         for(var i=0; i<selectedRows.length; i++){
-            // call api. on success continue. on fail, do nothing.
-            batchesAPI.deleteUser(authInfo.token, $routeParams.batch_id, selectedRows[i]).success(function(res){
-                // do work.
-            });
+        var promises = [];
+		$scope.processing_del = true;
+		
+        for(var i=0; i<selectedRows.length; i++){
+            promises.push(batchesAPI.deleteUser(authInfo.token, $routeParams.batch_id, selectedRows[i]));
         }
+		
+		$q.all(promises).then(function(){
+			$scope.processing_del = false;
+			$location.path('/batches/' + $routeParams.batch_id + '/view/users');
+		});
     };
     
     
@@ -92,15 +95,18 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         $scope.usersGridApi = gridApi;
     };
     $scope.addSelected = function(){
-        //$scope.processing_add = true;
         var selectedRows = $scope.usersGridApi.selection.getSelectedRows();
+		var promises = [];
+		$scope.processing_add = true;
         
         for(var i=0; i<selectedRows.length; i++){
-            // call api. on success continue. on fail, do nothing.
-            batchesAPI.addUser(authInfo.token, $routeParams.batch_id, selectedRows[i]).success(function(res){
-                // do work.
-            });
+            promises.push(batchesAPI.addUser(authInfo.token, $routeParams.batch_id, selectedRows[i]));
         }
+		
+		$q.all(promises).then(function(){
+			$scope.processing_add = false;
+			$location.path('/batches/' + $routeParams.batch_id + '/view/users');
+		});
     };
 }]);
 batches.controller('batchCreateCtrl', ['$scope', '$location', 'tablesAPI', 'batchesAPI', 'authInfo', function($scope, $location, tablesAPI, batchesAPI, authInfo){
