@@ -25,6 +25,9 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
             { name: 'Newsclip Date', field: 'Date' }
         ]
     };
+	$scope.process_action = false;
+	$scope.processing_action = [];
+	$scope.processing_action[$routeParams.action] = false;
 	
 	var batch_id = $routeParams.batch_id;
 	if(typeof batch_id === 'undefined'){
@@ -33,11 +36,11 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		switch($routeParams.action){
 			case 'add':
 				newsclipsAPI.noBatch(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
-				$scope.adding_batch = true;
+				$scope.process_action = $routeParams.action;
 				break;
 			case 'delete':
 				batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });
-				$scope.deleting_batch = true;
+				$scope.process_action = $routeParams.action;
 				break;
 			case 'view':
 				batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });
@@ -52,8 +55,7 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
 		var promises = [];
 		var dest = undefined;
-		$scope.processing_adding_batch = true;
-		$scope.processing_deleting_batch = true;
+		$scope.processing_action[action] = true;
         
         for(var i=0; i<selectedRows.length; i++){
 			switch(action){
@@ -69,8 +71,7 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		}
 		
 		$q.all(promises).then(function(){
-			$scope.processing_adding_batch = false;
-			$scope.processing_deleting_batch = false;
+			$scope.processing_action = false;
 			$location.path('/batches/' + $routeParams.batch_id + '/' + dest + '/newsclips');
 		});
     };
