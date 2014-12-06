@@ -17,7 +17,7 @@
             <div ui-grid="gridNewsclips" class="grid" ui-grid-selection></div>
 			
 			<button type="button" class="btn btn-primary" ng-show="process_action" ng-click="doBatchAction()" ng-disabled="processing_action">
-				{{process_action}} to Batch
+				{{process_action | batchAction}} Batch
                 <i ng-show="processing_action" class="fa fa-spinner fa-spin"></i>
             </button>
 		</div>

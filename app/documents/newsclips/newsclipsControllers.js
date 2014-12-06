@@ -1,4 +1,4 @@
-var newsclips = angular.module('newsclipsControllers', ['newsclipsFactory', 'batchesFactory']);
+var newsclips = angular.module('newsclipsControllers', ['newsclipsFilters', 'newsclipsFactory', 'batchesFactory']);
 
 newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, newsclipsAPI, authInfo){
     $scope.gridNewsclips = {
@@ -45,14 +45,13 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 	$scope.gridNewsclips.onRegisterApi = function(gridApi){ 
         $scope.gridApi = gridApi;
     };
-    $scope.doBatchAction = function(action){
+    $scope.doBatchAction = function(){
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
 		var promises = [];
-		action = (typeof action == 'undefined')? $routeParams.action: action;
 		$scope.processing_action = true;
         
         for(var i=0; i<selectedRows.length; i++){
-			switch(action){
+			switch($routeParams.action){
 				case 'add':
 					promises.push(batchesAPI.addDocument(authInfo.token, batch_id, selectedRows[i].ID));
 					break;
