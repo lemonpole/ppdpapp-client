@@ -25,9 +25,8 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
             { name: 'Newsclip Date', field: 'Date' }
         ]
     };
-	$scope.process_action = false;
-	$scope.processing_action = [];
-	$scope.processing_action[$routeParams.action] = false;
+	$scope.process_action = $routeParams.action;
+	$scope.processing_action = false;
 	
 	var batch_id = $routeParams.batch_id;
 	if(typeof batch_id === 'undefined'){
@@ -36,11 +35,6 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		switch($routeParams.action){
 			case 'add':
 				newsclipsAPI.noBatch(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
-				$scope.process_action = $routeParams.action;
-				break;
-			case 'delete':
-				batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });
-				$scope.process_action = $routeParams.action;
 				break;
 			case 'view':
 				batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });
@@ -54,25 +48,24 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
     $scope.doBatchAction = function(action){
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
 		var promises = [];
-		var dest = undefined;
-		$scope.processing_action[action] = true;
+		action = (typeof action == 'undefined')? $routeParams.action: action;
+		$scope.processing_action = true;
         
         for(var i=0; i<selectedRows.length; i++){
 			switch(action){
 				case 'add':
 					promises.push(batchesAPI.addDocument(authInfo.token, batch_id, selectedRows[i].ID));
-					dest = 'view'; // where we want to end up after the action is done.
 					break;
+				case 'view':
 				case 'delete':
 					promises.push(batchesAPI.deleteDocument(authInfo.token, batch_id, selectedRows[i].ID));
-					dest = 'delete';
 					break;
 			}
 		}
 		
 		$q.all(promises).then(function(){
 			$scope.processing_action = false;
-			$location.path('/batches/' + $routeParams.batch_id + '/' + dest + '/newsclips');
+			$location.path('/batches/' + $routeParams.batch_id + '/view/newsclips');
 		});
     };
 }]);
