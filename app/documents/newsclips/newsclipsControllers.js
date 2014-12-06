@@ -14,7 +14,7 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI',
 	
 	newsclipsAPI.getAll(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
 }]);
-newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', 'newsclipsAPI', 'batchesAPI', 'authInfo', function($scope, $routeParams, newsclipsAPI, batchesAPI, authInfo){
+newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$location', 'newsclipsAPI', 'batchesAPI', 'authInfo', function($scope, $routeParams, $q, $location, newsclipsAPI, batchesAPI, authInfo){
 	$scope.gridNewsclips = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -50,16 +50,28 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', 'newsclips
     };
     $scope.doBatchAction = function(action){
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
+		var promises = [];
+		var dest = undefined;
+		$scope.processing_adding_batch = true;
+		$scope.processing_deleting_batch = true;
         
         for(var i=0; i<selectedRows.length; i++){
 			switch(action){
 				case 'add':
-					batchesAPI.addDocument(authInfo.token, batch_id, selectedRows[i].ID).success(function(res){});
+					promises.push(batchesAPI.addDocument(authInfo.token, batch_id, selectedRows[i].ID));
+					dest = 'view'; // where we want to end up after the action is done.
 					break;
 				case 'delete':
-					batchesAPI.deleteDocument(authInfo.token, batch_id, selectedRows[i].ID).success(function(res){});
+					promises.push(batchesAPI.deleteDocument(authInfo.token, batch_id, selectedRows[i].ID));
+					dest = 'delete';
 					break;
 			}
 		}
+		
+		$q.all(promises).then(function(){
+			$scope.processing_adding_batch = false;
+			$scope.processing_deleting_batch = false;
+			$location.path('/batches/' + $routeParams.batch_id + '/' + dest + '/newsclips');
+		});
     };
 }]);
