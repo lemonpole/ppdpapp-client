@@ -1,7 +1,6 @@
 var batches = angular.module('batchesControllers', ['batchesFactory', 'usersFactory']);
 
-batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'tablesAPI', 'authInfo', function($scope, $location, batchesAPI, tablesAPI, authInfo){
-    $scope.processing = false;
+batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 'tablesAPI', 'authInfo', function($scope, $location, $q, batchesAPI, tablesAPI, authInfo){
     $scope.gridOptions = {
         enableSorting: true,
         enableRowSelection: true,
@@ -15,9 +14,12 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'tablesA
         ]
     };
     
-    batchesAPI.getAll(authInfo.token).success(function(res){
-        $scope.gridOptions.data = res;
-    });
+	$scope.reloadBatches = function(){
+		batchesAPI.getAll(authInfo.token).success(function(res){
+			$scope.gridOptions.data = res;
+		});
+	};
+	$scope.reloadBatches();
     
     $scope.gridScope = {
         load: function(batchObj){
@@ -37,10 +39,17 @@ batches.controller('batchesCtrl', ['$scope', '$location', 'batchesAPI', 'tablesA
     };
     $scope.deleteSelected = function(){
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
+		var promises = [];
+		$scope.processing = true;
         
         for(var i=0; i<selectedRows.length; i++){
-            batchesAPI.delete(authInfo.token, selectedRows[i].batchID).success(function(res){});
+            promises.push(batchesAPI.delete(authInfo.token, selectedRows[i].batchID));
         }
+		
+		$q.all(promises).then(function(){
+			$scope.reloadBatches();
+			$scope.processing = false;
+		});
     };
 }]);
 batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', '$q', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, $q, batchesAPI,  usersAPI, authInfo){
