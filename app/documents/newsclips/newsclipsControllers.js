@@ -98,8 +98,16 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 	};
 	$scope.reloadBatchDocs();
 	
-	$scope.gridOptions.onRegisterApi = function(gridApi){
-		//set gridApi on scope
-		$scope.gridApi = gridApi;
+	$scope.codeDocs = function(){
+		var promises = [];
+		$scope.processing = true;
+		
+		for(var i=0; i < $scope.gridOptions.data.length; i++){
+			if(typeof $scope.gridOptions.data[i].Coding != 'undefined'){
+				newsclipsAPI.addCode(authInfo.token, $scope.gridOptions.data[i].ID, $scope.gridOptions.data[i].coding);
+			}
+		}
+		
+		$scope.processing = false;
 	};
 }]);
