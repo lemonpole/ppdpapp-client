@@ -87,9 +87,9 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI){
 	$scope.gridOptions = {
         columnDefs: [
-            { field: 'Headline' },
-            { field: 'Abstract' },
-			{ name: 'Coding' }
+            { field: 'Headline', enableCellEdit: false },
+            { field: 'Abstract', enableCellEdit: false },
+			{ name: 'Coding', enableCellEdit: true, enableCellEditOnFocus:true }
         ]
     };
 	
