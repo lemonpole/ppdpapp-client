@@ -84,3 +84,22 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		});
     };
 }]);
+newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI){
+	$scope.gridOptions = {
+        columnDefs: [
+            { field: 'Headline' },
+            { field: 'Abstract' },
+			{ name: 'Coding' }
+        ]
+    };
+	
+	$scope.reloadBatchDocs = function(){
+		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){ $scope.gridOptions.data = res; });	
+	};
+	$scope.reloadBatchDocs();
+	
+	$scope.gridOptions.onRegisterApi = function(gridApi){
+		//set gridApi on scope
+		$scope.gridApi = gridApi;
+	};
+}]);

@@ -1,5 +1,6 @@
 var app = angular.module('ppdpapp.v2', [
-	'ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.grid',
+	'ngRoute', 'ngAnimate', 'ui.bootstrap',
+	'ui.grid', 'ui.grid.edit',
 	'ppdpappDirectives', 'ppdpappFactories', 'ppdpappFilters',
     'account', 'assignments', 'newsclips', 'batches', 'users'
 ]);

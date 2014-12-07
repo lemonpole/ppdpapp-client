@@ -10,6 +10,9 @@ newsclips.factory('newsclipsAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.noBatch = function(token){
 		return $http.get(urlBase + '/nobatch?token=' + token);	
 	};
+	dataFactory.noCode = function(token, batch_id){
+		return $http.get(urlBase + '/batch/' + batch_id + '/nocodes/?token=' + token);	
+	};
 	
 	return dataFactory;
 }]);

@@ -10,4 +10,15 @@ acct.config(['$routeProvider', function($routeProvider){
 			}
 		}
 	});
+	
+	$routeProvider.when('/assignments/:batch_id/view/newsclips', {
+		templateUrl			: 'app/documents/newsclips/newsclips_code.html',
+		caseInsensitiveMatch: true,
+		controller			: 'newsclipsCodeCtrl',
+		resolve				: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
 }]);

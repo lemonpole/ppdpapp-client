@@ -11,7 +11,7 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
             { name: 'Created By', field: 'creator' },
             { name: 'Date Added', field: 'dateAdded' },
             { name: 'Date Due', field: 'dateDue' },
-            { name: 'View', cellTemplate: '<button class="btn btn-default btn-xs" ng-click="getExternalScopes().loadBatch(row.entity)">View</button>' }
+            { name: 'View', cellTemplate: 'app/assignments/partials/cellTemplate_assignments.html' }
         ]
     };
     
@@ -23,7 +23,7 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
         loadBatch: function(batchObj){
             // redirect to batch viewer page.
 			tablesAPI.find(authInfo.token, batchObj.tablesID).success(function(res){
-            	$location.path('/batches/' + batchObj.batchID + '/view/' + res.TableName);
+            	$location.path('/assignments/' + batchObj.batchID + '/view/' + res.TableName);
             });
         }
     };
