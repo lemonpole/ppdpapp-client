@@ -1,0 +1,25 @@
+<div class="container-fluid">
+	<div class="row">
+		<ul id="navigation" class="col-md-2">
+			<li><a href="#/assignments">Assignments</a></li>
+			<li><a href="#/documents">Documents</a>
+                <ul>
+                    <li><a href="#/documents/newsclips">Newsclips</a></li>
+                </ul>
+            </li>
+			<li><a href="#/batches">Batches</a></li>
+			<li><a href="#/files">Files</a></li>
+			<li><a href="#/users">Users</a></li>
+		</ul>
+		
+		<div class="col-md-10">
+			<h1>Newsclips</h1>
+            <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
+			
+			<button type="button" class="btn btn-primary" ng-click="codeDocs()" ng-disabled="processing">
+				Add Codes
+                <i ng-show="processing" class="fa fa-spinner fa-spin"></i>
+            </button>
+		</div>
+	</div>
+</div>
