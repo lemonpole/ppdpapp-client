@@ -14,7 +14,7 @@
 		
 		<div class="col-md-10">
 			<h1>Newsclips</h1>
-            <div ui-grid="gridNewsclips" class="grid" ui-grid-selection></div>
+            <div ui-grid="gridNewsclips" class="grid" ui-grid-selection ui-grid-edit ui-grid-row-edit ui-grid-cellNav></div>
 			
 			<button type="button" class="btn btn-primary" ng-show="process_action" ng-click="doBatchAction()" ng-disabled="processing_action">
 				{{process_action | batchAction}} Batch
