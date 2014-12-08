@@ -94,14 +94,8 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
         ]
     };
 	
-	$scope.codes = undefined;
-	codesAPI.getAll(authInfo.token, 'NewsClips').success(function(res){ $scope.codes = res; });
-	
-	$scope.external = {
-		getCodes: function(){
-			return $scope.codes;
-		}
-	};
+	$scope.external = undefined;
+	codesAPI.getAll(authInfo.token, 'NewsClips').success(function(res){ $scope.external = res; });
 	
 	$scope.reloadBatchDocs = function(){
 		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){ $scope.gridOptions.data = res; });	
