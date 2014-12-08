@@ -10,4 +10,14 @@ users.config(['$routeProvider', function($routeProvider){
 			}
 		}
 	});
+	
+	$routeProvider.when('/users/create', {
+		templateUrl	: 'app/users/user_create.html',
+		controller	: 'userCreateCtrl',
+		resolve: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
 }]);
