@@ -1,6 +1,8 @@
 <div>
 	<form name="inputForm">
 		<input type="{{inputType}}" class="form-control" ng-class="'colt' + col.uid" ui-grid-editor ng-model="MODEL_COL_FIELD"
-		   typeahead="code.Description for code in getExternalScopes()" typeahead-append-to-body="true" />
+			   typeahead="code.Description for code in getExternalScopes().searchCodes($viewValue)" typeahead-append-to-body="true"
+			   typeahead-loading="getExternalScopes().loading" typeahead-on-select="getExternalScopes().onSelect($item, $model, $label)" />
+		<i ng-show="getExternalScopes().loading" class="glyphicon glyphicon-refresh"></i>
 	</form>
 </div>

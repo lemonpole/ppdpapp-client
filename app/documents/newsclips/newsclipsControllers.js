@@ -93,9 +93,19 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 			{ name: 'Coding', enableCellEdit: true, enableCellEditOnFocus:true, editableCellTemplate:'app/documents/newsclips/partials/cellTemplate_coding.html' }
         ]
     };
+	$scope.recent_edited = undefined;
 	
-	$scope.external = undefined;
-	codesAPI.getAll(authInfo.token, 'NewsClips').success(function(res){ $scope.external = res; });
+	// the reason all results are returned is because the typeahead expects functions to return a new result
+	// that reflects the current value. this method returns all the codes NO MATTER WHAT
+	$scope.external = {
+		loading: false,
+		searchCodes: function(s){
+			return codesAPI.search(authInfo.token, 'Newsclips', s).then(function(res){ return res.data; });
+		},
+		onSelect: function($item, $model, $label){
+			$scope.recent_edited = $item.Code;
+		}
+	};
 	
 	$scope.reloadBatchDocs = function(){
 		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){ $scope.gridOptions.data = res; });	
@@ -106,8 +116,13 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 	$scope.gridOptions.onRegisterApi = function(gridApi){
 		$scope.gridApi = gridApi;
 		gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue){
-			if(typeof rowEntity.Coding !== 'undefined' && rowEntity.Coding.length > 0) $scope.editedRows[rowEntity.ID] = rowEntity;
-			else $scope.editedRows[rowEntity.ID] = undefined;
+			if(typeof rowEntity.Coding !== 'undefined' && rowEntity.Coding.length > 0){
+				// search for string, get first result object id and place into editedrows.
+				rowEntity.Coding = $scope.recent_edited;
+				$scope.editedRows[rowEntity.ID] = rowEntity;
+			} else {
+				$scope.editedRows[rowEntity.ID] = undefined;
+			}
 		});
 	};
 	$scope.codeDocs = function(){

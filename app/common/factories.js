@@ -48,7 +48,10 @@ factories.factory('codesAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	
 	dataFactory.getAll = function(token, table_name){
 		return $http.get(urlBase + '/' + table_name + '?token=' + token);
-	};;
+	};
+	dataFactory.search = function(token, table_name, query){
+		return $http.get(urlBase + '/' + table_name + '/search/?query=' + query + '&token=' + token);
+	};
     
 	return dataFactory;
 }]);
