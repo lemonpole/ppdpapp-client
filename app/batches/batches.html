@@ -1,0 +1,25 @@
+<div class="container-fluid">
+	<div class="row">
+		<ul id="navigation" class="col-md-2">
+			<li><a href="#/assignments">Assignments</a></li>
+			<li><a href="#/documents">Documents</a>
+                <ul>
+                    <li><a href="#/documents/newsclips">Newsclips</a></li>
+                </ul>
+            </li>
+			<li><a href="#/batches">Batches</a></li>
+			<li><a href="#/files">Files</a></li>
+			<li><a href="#/users">Users</a></li>
+		</ul>
+		
+		<div class="col-md-10">
+			<h1>Batches <a href="#/batches/create" class="btn btn-default">Create Batch</a></h1>
+            <div external-scopes="gridScope" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+            
+            <button type="button" class="btn btn-primary" ng-click="deleteSelected()" ng-disabled="processing">
+                Delete Batch(es)
+                <i ng-show="processing" class="fa fa-spinner fa-spin"></i>
+            </button>
+		</div>
+	</div>
+</div>

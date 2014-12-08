@@ -12,7 +12,8 @@
 		
 		<!-- CSS files -->
 		<link rel="stylesheet" href="css/styles.css" />
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="libs/angular-ui-grid/ui-grid.min.css" />
 
 		
 		<!-- Angular dependencies -->
@@ -22,6 +23,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-cookies.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.2/ui-bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
+        <script src="libs/angular-ui-grid/ui-grid.min.js"></script>
 		<script src="libs/angularjs/angular-base64.min.js"></script>
 	</head>
 	<body>
@@ -99,9 +101,24 @@
 		
 		<!-- Load angularjs application files -->
 		<script src="app/app.js"></script>
+        <script src="app/common/directives.js"></script>
 		<script src="app/common/factories.js"></script>
+        <script src="app/common/filters.js"></script>
 		<script src="app/account/account.js"></script>
 		<script src="app/account/accountControllers.js"></script>
 		<script src="app/account/accountFactory.js"></script>
+		<script src="app/assignments/assignments.js"></script>
+		<script src="app/assignments/assignmentsControllers.js"></script>
+        <script src="app/assignments/assignmentsFactory.js"></script>
+        <script src="app/documents/newsclips/newsclips.js"></script>
+		<script src="app/documents/newsclips/newsclipsControllers.js"></script>
+        <script src="app/documents/newsclips/newsclipsFactory.js"></script>
+		<script src="app/documents/newsclips/newsclipsFilters.js"></script>
+        <script src="app/batches/batches.js"></script>
+        <script src="app/batches/batchesControllers.js"></script>
+        <script src="app/batches/batchesFactory.js"></script>
+        <script src="app/users/users.js"></script>
+        <script src="app/users/usersControllers.js"></script>
+        <script src="app/users/usersFactory.js"></script>
 	</body>
 </html>

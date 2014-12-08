@@ -1,0 +1,1 @@
+var dirs = angular.module('ppdpappDirectives', []);

@@ -1,6 +1,6 @@
 var acct = angular.module('accountFactory', ['base64']);
 
-acct.factory('accountAPIFactory', ['$http', '$base64', 'apiRoot', function($http, $base64, apiRoot){
+acct.factory('accountAPI', ['$http', '$base64', 'apiRoot', function($http, $base64, apiRoot){
 	var dataFactory = {};
 	var urlBase = apiRoot + '/account/';
 	
