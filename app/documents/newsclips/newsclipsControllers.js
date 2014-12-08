@@ -93,7 +93,6 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 			{ name: 'Coding', enableCellEdit: true, enableCellEditOnFocus:true, editableCellTemplate:'app/documents/newsclips/partials/cellTemplate_coding.html' }
         ]
     };
-	$scope.recent_edited = undefined;
 	
 	// the reason all results are returned is because the typeahead expects functions to return a new result
 	// that reflects the current value. this method returns all the codes NO MATTER WHAT
@@ -102,8 +101,8 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		searchCodes: function(s){
 			return codesAPI.search(authInfo.token, 'Newsclips', s).then(function(res){ return res.data; });
 		},
-		onSelect: function($item, $model, $label){
-			$scope.recent_edited = $item.Code;
+		onSelect: function($item, $model, $label, row){
+			row.entity.Coding = $item.Code;
 		}
 	};
 	
@@ -117,8 +116,6 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		$scope.gridApi = gridApi;
 		gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue){
 			if(typeof rowEntity.Coding !== 'undefined' && rowEntity.Coding.length > 0){
-				// search for string, get first result object id and place into editedrows.
-				rowEntity.Coding = $scope.recent_edited;
 				$scope.editedRows[rowEntity.ID] = rowEntity;
 			} else {
 				$scope.editedRows[rowEntity.ID] = undefined;
@@ -128,8 +125,7 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 	$scope.codeDocs = function(){
 		var promises = [];
 		$scope.processing = true;
-		console.log($scope.editedRows);
-		/*$scope.editedRows.forEach(function(row){
+		$scope.editedRows.forEach(function(row){
 			if(typeof row !== 'undefined'){
 				promises.push(newsclipsAPI.addCode(authInfo.token, row.ID, $routeParams.batch_id, row.Coding));
 			}
@@ -138,6 +134,6 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		$q.all(promises).then(function(){
 			$scope.processing = false;
 			$scope.reloadBatchDocs();
-		});*/
+		});
 	};
 }]);
