@@ -26,7 +26,6 @@ factories.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $l
 	
 	return dataFactory;
 }]);
-
 factories.factory('tablesAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	var dataFactory = {};
 	var urlBase = apiRoot + '/tables';
@@ -40,6 +39,19 @@ factories.factory('tablesAPI', ['$http', 'apiRoot', function($http, apiRoot){
     dataFactory.find = function(token, id){
         return $http.get(urlBase + '/id/' + id + '?token=' + token);  
     };
+    
+	return dataFactory;
+}]);
+factories.factory('codesAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/codes';
+	
+	dataFactory.getAll = function(token, table_name){
+		return $http.get(urlBase + '/' + table_name + '?token=' + token);
+	};
+	dataFactory.search = function(token, table_name, query){
+		return $http.get(urlBase + '/' + table_name + '/search/?query=' + query + '&token=' + token);
+	};
     
 	return dataFactory;
 }]);
