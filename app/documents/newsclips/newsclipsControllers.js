@@ -84,15 +84,24 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		});
     };
 }]);
-newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI){
+newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', 'codesAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI, codesAPI){
 	$scope.gridOptions = {
         columnDefs: [
             { field: 'ID', enableCellEdit: false },
             { field: 'Headline', enableCellEdit: false },
             { field: 'Abstract', enableCellEdit: false },
-			{ name: 'Coding', enableCellEdit: true, enableCellEditOnFocus:true }
+			{ name: 'Coding', enableCellEdit: true, enableCellEditOnFocus:true, editableCellTemplate:'app/documents/newsclips/partials/cellTemplate_coding.html' }
         ]
     };
+	
+	$scope.codes = undefined;
+	codesAPI.getAll(authInfo.token, 'NewsClips').success(function(res){ $scope.codes = res; });
+	
+	$scope.external = {
+		getCodes: function(){
+			return $scope.codes;
+		}
+	};
 	
 	$scope.reloadBatchDocs = function(){
 		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){ $scope.gridOptions.data = res; });	
@@ -103,18 +112,15 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 	$scope.gridOptions.onRegisterApi = function(gridApi){
 		$scope.gridApi = gridApi;
 		gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue){
-			if(typeof rowEntity.Coding !== 'undefined' && rowEntity.Coding.length > 0){
-				$scope.editedRows[rowEntity.ID] = rowEntity;
-			} else {
-				$scope.editedRows[rowEntity.ID] = undefined;	
-			}
+			if(typeof rowEntity.Coding !== 'undefined' && rowEntity.Coding.length > 0) $scope.editedRows[rowEntity.ID] = rowEntity;
+			else $scope.editedRows[rowEntity.ID] = undefined;
 		});
 	};
 	$scope.codeDocs = function(){
 		var promises = [];
 		$scope.processing = true;
-		
-		$scope.editedRows.forEach(function(row){
+		console.log($scope.editedRows);
+		/*$scope.editedRows.forEach(function(row){
 			if(typeof row !== 'undefined'){
 				promises.push(newsclipsAPI.addCode(authInfo.token, row.ID, $routeParams.batch_id, row.Coding));
 			}
@@ -123,6 +129,6 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		$q.all(promises).then(function(){
 			$scope.processing = false;
 			$scope.reloadBatchDocs();
-		});
+		});*/
 	};
 }]);
