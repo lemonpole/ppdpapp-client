@@ -96,11 +96,14 @@ ul#navigation {
     li {
         border-top: 1px solid lighten(#333333, 10%);
         border-bottom: 1px solid darken(#333333, 10%);
-        opacity: 0.8;
+        opacity: 0.5;
         
         &.active {
             opacity: 1.0;
-            border-left: 5px solid white;
+            
+            a {
+                border-left: 5px solid white;
+            }
         }
         
         &.group {
@@ -112,7 +115,7 @@ ul#navigation {
             border-bottom-width: 0px;
             
             a {
-                padding-left: 40px;
+                padding-left: 50px;
             }
             
             &.last {
@@ -156,13 +159,28 @@ ul#navigation {
     overflow: hidden;
     background: white;
     border-radius: 4px;
+    box-sizing: border-box;
+    
+    &[ui-grid-selection] {
+        .ui-grid-render-container-body {
+            margin-left: 30px;
+        }
+    }
+    
+    &.half-left {
+        right: 51%;
+    }
+    
+    &.half-right {
+        left: 51%;
+    }
 }
 
 #content .grid-heading {
     position: absolute;
     left: 30px;
     top: 20px;
-    font-size: 35px;
+    font-size: 33px;
     letter-spacing: 2px;
     font-family:'Bebas Neue', Verdana, sans-serif;
     color: #444444;
@@ -189,6 +207,15 @@ ul#navigation {
         &:active {
             box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
         }
+        
+        &.disabled {
+            opacity: 0.5;
+            cursor: default;
+            
+            &:active {
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+            }
+        }
     }
 }
 
@@ -200,6 +227,10 @@ ul#navigation {
     bottom: 0px;
     box-sizing: border-box;
     padding: 30px;
+    
+    &.expanded {
+        left: 0px;
+    }
     
     h1 {
         margin-top: 0px;

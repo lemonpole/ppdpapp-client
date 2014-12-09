@@ -1,5 +1,8 @@
 <div ng-class="{transparent: !loaded}">
-    <h1>Assignments</h1>
+    <div class="grid-heading">Assignments</div>
+    <div class="grid-buttons">
+        <div class="grid-button" ng-click="refresh()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
+    </div>
     <div external-scopes="gridAssignmentsScope" ui-grid="gridAssignments" ui-grid-cellnav ui-grid-selection class="grid"></div>
 </div>
 <div class="connection-problem" ng-class="{concealed: !requestFailed}">

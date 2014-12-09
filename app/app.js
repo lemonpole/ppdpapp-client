@@ -21,13 +21,40 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 	
 	$provide.constant('apiRoot', apiRootElem.attr('href'));
 	$provide.value('authInfo', {
-		token: 'k0nXf9nsC8ndoMrjgNZwDb8Lq42rHfET:1417047552017', // set back to undefined once done debugging...
-		email: 'admin@temple.edu'
+//		token: 'k0nXf9nsC8ndoMrjgNZwDb8Lq42rHfET:1417047552017', // set back to undefined once done debugging...
+        token: undefined,
+//		email: 'admin@temple.edu'
+        email: undefined
 	});
 	
 	$animateProvider.classNameFilter(/animate/);
 }]);
 
-app.controller('appCtrl', ['$scope', function($scope){
+app.controller('appCtrl', ['$scope', '$location', 'authInfo', function($scope, $location, authInfo){
+    $scope.goto = function(where) {
+        $location.path(where);
+    };
+    $scope.isNavActive = function(where) {
+        return $location.path() === where;
+    };
+    $scope.isNavAllowed = function(where) {
+        var roleName = authInfo ? authInfo.user ? authInfo.user.role ? authInfo.user.role.name : null : null : null;
+        if (!roleName) return false;
+        else roleName = roleName.toLowerCase().trim();
+        
+        console.log('role name was', roleName);
+        if (roleName === "researcher") {
+            return (where.indexOf("/assignments") === 0);
+        } else if (roleName === "sr. researcher") {
+            return (where.indexOf("/assignments") === 0) ||
+                (where.indexOf("/documents") === 0);
+        } else if (roleName === "admin") {
+            // Admin
+            return true;
+        } else {
+            // Unknown
+            return false;
+        }
+    };
 	// do work
 }]);

@@ -1,8 +1,8 @@
 <div ng-class="{transparent: !loaded}">
     <div class="grid-heading">Users</div>
     <div class="grid-buttons">
-        <div class="grid-button"><i class="fa fa-plus"></i></div>
-        <div class="grid-button"><i class="fa fa-refresh"></i></div>
+        <div class="grid-button" ng-click="goto('/users/create')" title="Create a new user"><i class="fa fa-plus"></i></div>
+        <div class="grid-button" ng-click="refresh()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
     </div>
     <div ui-grid="gridOptions" ui-grid-cellnav class="grid"></div>
 </div>

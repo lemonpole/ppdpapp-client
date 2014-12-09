@@ -26,7 +26,7 @@
         <script src="libs/angular-ui-grid/ui-grid.min.js"></script>
 		<script src="libs/angularjs/angular-base64.min.js"></script>
 	</head>
-	<body>
+	<body ng-controller="appCtrl">
 		<!-- Header -->
 		<nav class="navbar navbar-default navbar-fixed-top navbar-cherry" role="navigation">
 			<!-- Mobile version -->
@@ -49,15 +49,15 @@
 		</nav>
 		
 		<!-- Main -->
-        <ul id="navigation">
-            <li><a href="#/assignments"><i class="fa fa-refresh"></i> Assignments</a></li>
-            <li class="group"><a href="#/documents"><i class="fa fa-archive"></i> Documents</a></li>
-            <li class="indented last"><a href="#/documents/newsclips"><i class="fa fa-newspaper-o"></i> Newsclips</a></li>
-            <li><a href="#/batches"><i class="fa fa-folder"></i> Batches</a></li>
-            <li><a href="#/files"><i class="fa fa-file"></i> Files</a></li>
-            <li><a href="#/users"><i class="fa fa-user"></i> Users</a></li>
+        <ul id="navigation" ng-class="{hidden: isNavActive('/login')}">
+            <li ng-class="{active: isNavActive('/assignments'), hidden: !isNavAllowed('/assignments')}"><a href="#/assignments"><i class="fa fa-refresh"></i> Assignments</a></li>
+            <li ng-class="{active: isNavActive('/documents'), hidden: !isNavAllowed('/documents')}" class="group"><a href="#/documents"><i class="fa fa-archive"></i> Documents</a></li>
+            <li ng-class="{active: isNavActive('/documents/newsclips'), hidden: !isNavAllowed('/documents/newsclips')}" class="indented last"><a href="#/documents/newsclips"><i class="fa fa-newspaper-o"></i> Newsclips</a></li>
+            <li ng-class="{active: isNavActive('/batches'), hidden: !isNavAllowed('/batches')}"><a href="#/batches"><i class="fa fa-folder"></i> Batches</a></li>
+            <li ng-class="{active: isNavActive('/files'), hidden: !isNavAllowed('/files')}"><a href="#/files"><i class="fa fa-file"></i> Files</a></li>
+            <li ng-class="{active: isNavActive('/users'), hidden: !isNavAllowed('/users')}"><a href="#/users"><i class="fa fa-user"></i> Users</a></li>
 		</ul>
-		<div id="content" class="animate fader" ng-view></div>
+		<div id="content" class="animate fader" ng-class="{expanded: isNavActive('/login')}" ng-view></div>
 		
 		<!-- Footer -->
 <!--

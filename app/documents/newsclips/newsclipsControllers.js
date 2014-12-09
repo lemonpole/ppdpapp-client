@@ -111,6 +111,7 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
         $scope.gridApi = gridApi;
     };
     $scope.doBatchAction = function(){
+        if ($scope.processing_action) return;
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
 		var promises = [];
 		$scope.processing_action = true;
@@ -192,6 +193,8 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		});
 	};
 	$scope.codeDocs = function(){
+        if (processing) return;
+        
 		var promises = [];
 		$scope.processing = true;
 		$scope.editedRows.forEach(function(row){
