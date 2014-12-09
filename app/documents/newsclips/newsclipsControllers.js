@@ -9,6 +9,7 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclip
         enableSelectAll: true,
         multiSelect: true,
         columnDefs: [
+			{ field: 'ID' },
             { field: 'Headline' },
             { field: 'Abstract' },
             { name: 'Newsclip Date', field: 'Date' }
