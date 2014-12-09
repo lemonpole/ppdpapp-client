@@ -151,7 +151,7 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
 		});
     };
 }]);
-newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', 'codesAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI, codesAPI){
+newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', 'codesAPI', 'batchesAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI, codesAPI, batchesAPI){
     $scope.loaded = false;
     $scope.requestFailed = false;
     $scope.gridOptions = {
@@ -179,9 +179,13 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
         $scope.loaded = false;
         $scope.requestFailed = false;
 		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){
+			batchesAPI.find(authInfo.token, $routeParams.batch_id).success(function(res_inner){
+				$scope.loaded = true;
+            	$scope.requestFailed = false;
+				console.log(res_inner.fileID);
+				if(res_inner.fileID != null) $scope.has_file = true;
+			});
             $scope.gridOptions.data = res;
-            $scope.loaded = true;
-            $scope.requestFailed = false;
         }).error(function() {
             $scope.loaded = false;
             $scope.requestFailed = true;

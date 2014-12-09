@@ -7,6 +7,9 @@ batches.factory('batchesAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.getAll = function(token){
 		return $http.get(urlBase + '?token=' + token);
 	};
+	dataFactory.find = function(token, batch_id){
+		return $http.get(urlBase + '/' + batch_id + '?token=' + token);
+	};
     dataFactory.create = function(token, batchObj){
         return $http.post(urlBase + '?token=' + token, batchObj);
     };
