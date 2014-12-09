@@ -1,11 +1,15 @@
-var auth = angular.module('ppdpappFactories', []);
+var factories = angular.module('ppdpappFactories', []);
 
-auth.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $location, authInfo){
+factories.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $location, authInfo){
 	var dataFactory = {};
 	
-	dataFactory.isLoggedIn = function(){
+	dataFactory.resolveIsLoggedIn = function(){
 		var deferred = $q.defer();
 		var authenticated = true;
+		
+		// enable the two lines below for debugging.
+		//deferred.resolve();
+		//return deferred.promise;
 		
 		// check if global token var is set.
 		// check that token corresponds to current user or that it did not expire.
@@ -20,5 +24,34 @@ auth.factory('authFactory', ['$q', '$location', 'authInfo', function($q, $locati
 		return deferred.promise;
 	};
 	
+	return dataFactory;
+}]);
+factories.factory('tablesAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/tables';
+	
+	dataFactory.getAll = function(token){
+		return $http.get(urlBase + '?token=' + token);
+	};
+    dataFactory.getByName = function(token, name){
+        return $http.get(urlBase + '/name/' + name + '?token=' + token);  
+    };
+    dataFactory.find = function(token, id){
+        return $http.get(urlBase + '/id/' + id + '?token=' + token);  
+    };
+    
+	return dataFactory;
+}]);
+factories.factory('codesAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/codes';
+	
+	dataFactory.getAll = function(token, table_name){
+		return $http.get(urlBase + '/' + table_name + '?token=' + token);
+	};
+	dataFactory.search = function(token, table_name, query){
+		return $http.get(urlBase + '/' + table_name + '/search/?query=' + query + '&token=' + token);
+	};
+    
 	return dataFactory;
 }]);

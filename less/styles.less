@@ -19,13 +19,14 @@
 /* Global Styles */
 html { font-size:10px; }
 body {
-	background-color:@base_bgcolor; margin-top:@navbar-height + @navbar-margin-bottom;
+	background-color:@base_bgcolor; margin-top:@navbar-height;
 	font-family:'Droid Sans', Arial, sans-serif;
 	color:@base_fontcolor; font-size:1.4em;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family:'Bebas Neue', Verdana, sans-serif;
 	& > small { display:block; color:@base_fontcolor; }
+    & > button, & > a.btn { font-family:'Droid Sans', Arial, sans-serif; }
 }
 h1 { font-size:3.2em; }
 h2 { font-size:2.4em; }
@@ -40,8 +41,8 @@ a {
 
 /* Main navbar */
 .navbar-cherry {
-	background-color: @cherry_red;
-	border-color: @cherry_red_dark; border-radius:0;
+	background-color: @cherry_red; border-color: @cherry_red_dark; border-radius:0;
+	margin-bottom:0 !important;
 	
 	.navbar-brand, .navbar-text {
 		color:@base_bgcolor;
@@ -59,10 +60,10 @@ a {
 
 /* Route animator */
 #fader-container {
-	position:relative; min-height:300px;
+	position:relative; height:auto;
 
 	.fader {
-		position:absolute; top:0; left:0; right:0;
+		position:relative; top:0; left:0; right:0;
 		height:100%; opacity:1;
 
 		&.ng-enter, &.ng-leave {
@@ -78,9 +79,134 @@ a {
 	}
 }
 
+/* main page navigation */
+ul#navigation {
+	background-color:@white; height:100vh;
+	padding-left:0; padding-right:0; list-style-type:none;
+	border-right:1px solid @base_bordercolor;
+	
+    & > li {
+        border-bottom:1px solid @base_bordercolor;
+        
+        &:hover {
+			& > a { padding-left:@mp_small + @mp_xsmall; }
+            & > ul > li { margin-left:-@mp_xsmall; }
+		}
+        & > ul {
+            list-style-type:none; padding-left:@mp_small;
+            
+            &:hover { padding-left:@mp_xsmall; border-left:@mp_xsmall solid @ash_gray; }
+            & > li:last-child { border-bottom:0; }
+        }
+    }
+	li {
+        &:hover {
+			border-left:@mp_xsmall solid @ash_gray;
+			background-color:@white_alt;
+        }
+        & > a {
+			display:block; width:100%;
+			padding:@mp_small @mp_medium;
+			
+			&:hover { text-decoration:none; }
+		}
+	}
+}
+
+/* generic data grid */
+.grid {
+    width:100%; height:@grid_height;
+}
+
+ul#navigation {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    width: 250px;
+    bottom: 0px;
+}
+
+#content {
+    position: absolute;
+    top: 50px;
+    left: 250px;
+    right: 0px;
+    bottom: 0px;
+    box-sizing: border-box;
+    padding: 30px;
+    
+    h1 {
+        margin-top: 0px;
+    }
+}
+
+/* loading animation */
+.loading-animation {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    opacity: 1.0;
+    transition: top 1s, opacity 1s;
+    
+    &.concealed {
+        top: -100px;
+        opacity: 0;
+    }
+    
+    .loading-animation-bg {
+        position: absolute;
+        top: 0px;
+        left: 50%;
+        background: white;
+        padding: 20px 22px;
+        border-radius: 36px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        color: #666666;
+        width: 72px;
+        height: 72px;
+        margin-top: -36px;
+        margin-left: -36px;
+        
+        .fa-refresh {
+            font-size: 32px;
+            -webkit-animation: fa-spin 1s infinite linear;
+            animation: fa-spin 1s infinite linear;
+        }
+    }
+}
+
+/* connection problem prompt */
+.connection-problem {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    color: #666666;
+    margin-top: -88px;
+    display: block;
+    
+    &.concealed {
+        display: none;
+    }
+    
+    .fa-warning {
+        font-size: 100px;
+        margin-bottom: 20px;
+    }
+    
+    .message {
+        font-size: 20px;
+    }
+}
+.transparent {
+    opacity: 0.0;
+}
+
 /* Temple network - footer. */
 footer {
-	background-color:@base_fontcolor; margin-top:@navbar-height;
+	background-color:@base_fontcolor;
 	border-top:@mp_small+5 solid @footer_dark;
 	color:@base_bgcolor;
 	
@@ -121,5 +247,18 @@ footer {
 				ul { display:none; }
 			}
 		}
+	}
+}
+
+/* file upload */
+.btn-file {
+    position:relative; overflow:hidden;
+	
+	input[type='file'] {
+		display:block; background:white;
+		position:absolute; top:0; right:0;
+		min-width:100%; min-height:100%;
+		font-size:999px; text-align:right;
+		opacity:0; outline:none; cursor:inherit;
 	}
 }

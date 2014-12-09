@@ -1,6 +1,8 @@
 var app = angular.module('ppdpapp.v2', [
-	'ngRoute', 'ngAnimate', 'ui.bootstrap',
-	'ppdpappFactories', 'account'
+	'ngRoute', 'ngAnimate', 'ui.bootstrap', 'angularFileUpload',
+	'ui.grid', 'ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.rowEdit',
+	'ppdpappDirectives', 'ppdpappFactories', 'ppdpappFilters',
+    'account', 'assignments', 'newsclips', 'batches', 'users', 'files'
 ]);
 
 app.config(['$routeProvider', '$provide', '$animateProvider', function($routeProvider, $provide, $animateProvider){
@@ -12,20 +14,20 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 		controller: 'appCtrl',
 		resolve: {
 			authenticated: function(authFactory){
-				return authFactory.isLoggedIn();	
+				return authFactory.resolveIsLoggedIn();	
 			}
 		}
 	});
 	
 	$provide.constant('apiRoot', apiRootElem.attr('href'));
 	$provide.value('authInfo', {
-		token: undefined,
-		email: undefined
+		token: 'k0nXf9nsC8ndoMrjgNZwDb8Lq42rHfET:1417047552017', // set back to undefined once done debugging...
+		email: 'admin@temple.edu'
 	});
 	
 	$animateProvider.classNameFilter(/animate/);
 }]);
 
 app.controller('appCtrl', ['$scope', function($scope){
-	console.log('hello, world!');
+	// do work
 }]);

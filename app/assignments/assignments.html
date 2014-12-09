@@ -1,0 +1,13 @@
+<div ng-class="{transparent: !loaded}">
+    <h1>Assignments</h1>
+    <div external-scopes="gridAssignmentsScope" ui-grid="gridAssignments" ui-grid-selection class="grid"></div>
+</div>
+<div class="connection-problem" ng-class="{concealed: !requestFailed}">
+    <i class="fa fa-warning"></i>
+    <div class="message">There was a problem contacting the server.<br>Please ensure you have a strong connection.</div>
+</div>
+<div class="loading-animation" ng-class="{concealed: (loaded || requestFailed)}">
+    <div class="loading-animation-bg">
+        <i class="fa fa-refresh"></i>
+    </div>
+</div>
