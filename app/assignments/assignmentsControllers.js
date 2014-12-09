@@ -25,9 +25,9 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
             $scope.gridAssignments.data = res;
             $scope.loaded = true;
             $scope.requestFailed = false;
-        }).error(function(){
-            $scope.loaded = false;
-            $scope.requestFailed = true;
+        }).error(function(){ // when no assignments, was causing an error...
+            $scope.loaded = true;
+            $scope.requestFailed = false;
         });
     };
     $scope.refresh();
