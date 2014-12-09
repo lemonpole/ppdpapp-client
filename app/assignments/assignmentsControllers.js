@@ -18,14 +18,19 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
         ]
     };
     
-    assignmentsAPI.getAll(authInfo.token).success(function(res){
-        $scope.gridAssignments.data = res;
-        $scope.loaded = true;
-        $scope.requestFailed = false;
-    }).error(function(){
+    $scope.refresh = function() {
         $scope.loaded = false;
-        $scope.requestFailed = true;
-    });
+        $scope.requestFailed = false;
+        assignmentsAPI.getAll(authInfo.token).success(function(res){
+            $scope.gridAssignments.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function(){
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });
+    };
+    $scope.refresh();
     
     $scope.gridAssignmentsScope = {
         loadBatch: function(batchObj){

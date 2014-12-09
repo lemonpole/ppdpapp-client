@@ -19,6 +19,8 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
     };
     
 	$scope.reloadBatches = function(){
+        $scope.loaded = false;
+        $scope.requestFailed = false;
 		batchesAPI.getAll(authInfo.token).success(function(res){
 			$scope.gridOptions.data = res;
             $scope.loaded = true;
@@ -47,6 +49,8 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
         $scope.gridApi = gridApi;
     };
     $scope.deleteSelected = function(){
+        if ($scope.processing) return; 
+
         var selectedRows = $scope.gridApi.selection.getSelectedRows();
 		var promises = [];
 		$scope.processing = true;
@@ -111,11 +115,17 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
 	};
     $scope.reloadBatchUsers();
     $scope.reloadUsers();
+    $scope.refresh = function() {
+        $scope.reloadBatchUsers();
+        $scope.reloadUsers();
+    };
     
     $scope.gridBatchUsersOptions.onRegisterApi = function(gridApi){ 
         $scope.batchUsersGridApi = gridApi;
     };
     $scope.deleteSelected = function(){
+        if ($scope.processing_del) return;
+        
         var selectedRows = $scope.batchUsersGridApi.selection.getSelectedRows();
         var promises = [];
 		$scope.processing_del = true;
@@ -135,6 +145,8 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
         $scope.usersGridApi = gridApi;
     };
     $scope.addSelected = function(){
+        if ($scope.processing_add) return;
+        
         var selectedRows = $scope.usersGridApi.selection.getSelectedRows();
 		var promises = [];
 		$scope.processing_add = true;

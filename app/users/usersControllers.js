@@ -5,14 +5,19 @@ users.controller('usersCtrl', ['$scope', 'usersAPI', 'authInfo', function($scope
     $scope.loaded = false;
     $scope.requestFailed = false;
     
-    usersAPI.getAll(authInfo.token).success(function(res){
-        $scope.gridOptions.data = res;
-        $scope.loaded = true;
-        $scope.requestFailed = false;
-    }).error(function() {
+    $scope.refresh = function() {
         $scope.loaded = false;
-        $scope.requestFailed = true;
-    });
+        $scope.requestFailed = false;
+        usersAPI.getAll(authInfo.token).success(function(res){
+            $scope.gridOptions.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });
+    };
+    $scope.refresh();
 }]);
 users.controller('userCreateCtrl', ['$scope', '$location', 'usersAPI', 'authInfo', function($scope, $location, usersAPI, authInfo){
     $scope.role_dd_status = false;

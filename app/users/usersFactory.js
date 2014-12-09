@@ -7,6 +7,9 @@ users.factory('usersAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.getAll = function(token){
 		return $http.get(urlBase + '?token=' + token);
 	};
+    dataFactory.findByEmail = function(email, token){
+		return $http.get(urlBase + email + '?token=' + token);
+	};
 	dataFactory.getAllRoles = function(token){
 		return $http.get(apiRoot + '/roles?token=' + token);	
 	};

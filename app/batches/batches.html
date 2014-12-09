@@ -1,11 +1,11 @@
 <div ng-class="{transparent: !loaded}">
-    <h1>Batches <a href="#/batches/create" class="btn btn-default">Create Batch</a></h1>
-    <div external-scopes="gridScope" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
-
-    <button type="button" class="btn btn-primary" ng-click="deleteSelected()" ng-disabled="processing">
-        Delete Batch(es)
-        <i ng-show="processing" class="fa fa-spinner fa-spin"></i>
-    </button>
+    <div class="grid-heading">Batches</div>
+    <div class="grid-buttons">
+        <div class="grid-button" ng-click="reloadBatches()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
+        <div class="grid-button" ng-click="deleteSelected()" ng-class="{disabled: processing}" title="Delete batches"><i class="fa fa-minus"></i></div>
+        <div class="grid-button" ng-click="goto('/batches/create')" title="Create a new batch"><i class="fa fa-plus"></i></div>
+    </div>
+    <div ui-grid="gridOptions" external-scopes="gridScope" ui-grid-cellnav ui-grid-selection class="grid"></div>
 </div>
 <div class="connection-problem" ng-class="{concealed: !requestFailed}">
     <i class="fa fa-warning"></i>

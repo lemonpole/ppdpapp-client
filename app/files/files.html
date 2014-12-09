@@ -1,6 +1,10 @@
 <div ng-class="{transparent: !loaded}">
-    <h1>Files <a href="#/files/create" class="btn btn-default">Upload File</a></h1>
-    <div external-scopes="gridScope" ui-grid="gridOptions" ui-grid-selection ui-grid-cellNav class="grid"></div>
+    <div class="grid-heading">Files</div>
+    <div class="grid-buttons">
+        <div class="grid-button" ng-click="goto('/files/create')" title="Create a new file"><i class="fa fa-plus"></i></div>
+        <div class="grid-button" ng-click="refresh()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
+    </div>
+    <div ui-grid="gridOptions" ui-grid-cellnav class="grid"></div>
 </div>
 <div class="connection-problem" ng-class="{concealed: !requestFailed}">
     <i class="fa fa-warning"></i>

@@ -1,6 +1,10 @@
 <div ng-class="{transparent: !loaded}">
-    <h1>Users <a href="#/users/create" class="btn btn-default">Create User</a></h1>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div class="grid-heading">Users</div>
+    <div class="grid-buttons">
+        <div class="grid-button" ng-click="goto('/users/create')" title="Create a new user"><i class="fa fa-plus"></i></div>
+        <div class="grid-button" ng-click="refresh()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
+    </div>
+    <div ui-grid="gridOptions" ui-grid-cellnav class="grid"></div>
 </div>
 <div class="connection-problem" ng-class="{concealed: !requestFailed}">
     <i class="fa fa-warning"></i>
