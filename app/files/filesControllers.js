@@ -38,7 +38,7 @@ files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', fu
         }
     };
 }]);
-files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI', 'tablesAPI', 'authInfo', function($scope, $location, $upload, filesAPI, tablesAPI, authInfo){
+files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI', 'tablesAPI', 'batchesAPI', 'authInfo', function($scope, $location, $upload, filesAPI, tablesAPI, batchesAPI, authInfo){
 	$scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
@@ -65,20 +65,39 @@ files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI'
 		var file = $files[0];
 		var fileObj = {
 			name: $scope.name,
-			dateAdded: new Date()
+			dateAdded: new Date(),
+			creator: authInfo.email
 		};
 		var batchObj = {
 			name: $scope.name,
 			dateDue: $scope.dt,
 			dateAdded: new Date(),
 			tablesID: $scope.batch_type.ID,
+			creator: authInfo.email
 		};
 		
-		filesAPI.create(authInfo.token, file, fileObj, batchObj).progress(function(evt){
+		filesAPI.create(authInfo.token, fileObj).success(function(file_obj){
+			batchObj.fileID = file_obj.fileID;
+			batchesAPI.create(authInfo.token, batchObj).success(function(res){
+				$scope.processing = false;
+				$location.path('/files');
+			});
+		});
+		
+		
+		// actual file upload pointing to whatever server.
+		/*filesAPI.upload(authInfo.token, file).progress(function(evt){
 			$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
 		}).success(function(data, status, headers, config){
-			$scope.processing = false;
-			$location.path('/files/');
-		});
+			//append fileObj.url from result.
+			
+			filesAPI.create(authInfo.token, fileObj).success(function(file_obj){
+				batchObj.fileID = file_obj.fileID;
+				batchesAPI.create(authInfo.token, batchObj).success(function(res){
+					$scope.processing = false;
+					console.log('do_work');
+				});
+			});
+		});*/
 	};
 }]);

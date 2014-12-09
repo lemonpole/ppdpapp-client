@@ -10,14 +10,13 @@ users.factory('filesAPI', ['$http', '$upload', 'apiRoot', function($http, $uploa
 	dataFactory.findBatch = function(token, file_id){
 		return $http.get(urlBase + '/' + file_id + '/batch');
 	};
-	dataFactory.create = function(token, file, fileObj, batchObj){
+	dataFactory.create = function(token, fileObj){
+		return $http.post(urlBase + '?token=' + token, fileObj);
+	};
+	dataFactory.upload = function(token, file){
 		return $upload.upload({
 			url: urlBase + '?token=' + token,
-			data: {
-				data: file,
-				fileObj: fileObj,
-				batchObj: batchObj
-			}
+			data: { data: file }
 		});
 	};
 	
