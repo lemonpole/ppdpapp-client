@@ -29,26 +29,20 @@
             </div>
         </div></div>
 		
-		<div class="form-group row">
-			<div class="col-md-12">
-				<span class="btn btn-success btn-file btn-lg">
-					<span class="glyphicon glyphicon-plus"></span> Upload
-					<input type="file" ng-file-select="onFileSelect($files)" />
-				</span>
-			</div>
-		</div>
-		
 		<div class="row margin-top-large">
 			<div class="col-md-6">
 				<progressbar value="progress"></progressbar>
 			</div>
 		</div>
 		
-		<div class="form-group margin-top-xlarge">
-            <button type="button" class="btn btn-primary" ng-click="create()" ng-disabled="form.$invalid||processing">
-                Create
-                <i ng-show="processing" class="fa fa-spinner fa-spin"></i>
-            </button>
-        </div>
+		<div class="form-group row">
+			<div class="col-md-12">
+				<span class="btn btn-success btn-file btn-lg" ng-disabled="form.$invalid||processing||!batch_type.TableTitle">
+					<span class="glyphicon glyphicon-plus"></span> Select file and Upload
+					<input type="file" ng-file-select="onFileSelect($files)" />
+					<i ng-show="processing" class="fa fa-spinner fa-spin"></i>
+				</span>
+			</div>
+		</div>
     </form>
 </div>

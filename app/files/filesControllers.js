@@ -38,7 +38,7 @@ files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', fu
         }
     };
 }]);
-files.controller('fileCreateCtrl', ['$scope', '$upload', 'filesAPI', 'tablesAPI', 'authInfo', function($scope, $upload, filesAPI, tablesAPI, authInfo){
+files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI', 'tablesAPI', 'authInfo', function($scope, $location, $upload, filesAPI, tablesAPI, authInfo){
 	$scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
@@ -61,17 +61,32 @@ files.controller('fileCreateCtrl', ['$scope', '$upload', 'filesAPI', 'tablesAPI'
     };
 	
 	$scope.onFileSelect = function($files){
-		// build objects i will pass.
+		$scope.processing = true;
+		var fileObj = {
+			name: $scope.name,
+			dateAdded: new Date()
+		};
+		var batchObj = {
+			name: $scope.name,
+			dateDue: $scope.dt,
+			dateAdded: new Date(),
+			tablesID: $scope.batch_type.ID,
+		};
 		
 		for(var i=0; i<$files.length; i++){
 			var file = $files[i];
 			$upload.upload({
 				url: 'http://js.localhost/ppdpapp-client/#/files/create',
-				data: {file: file}
+				data: {
+					data: file,
+					fileObj: fileObj,
+					batchObj: batchObj
+				}
 			}).progress(function(evt){
 				$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
 			}).success(function(data, status, headers, config){
-				console.log('darude');
+				$scope.processing = false;
+				$location.path('/files/');
 			});
 		}
 	};
