@@ -8,7 +8,7 @@ users.factory('filesAPI', ['$http', '$upload', 'apiRoot', function($http, $uploa
 		return $http.get(urlBase + '?token=' + token);
 	};
 	dataFactory.findBatch = function(token, file_id){
-		return $http.get(urlBase + '/' + file_id + '/batch');
+		return $http.get(urlBase + '/' + file_id + '/batches/?token=' + token);
 	};
 	dataFactory.create = function(token, fileObj){
 		return $http.post(urlBase + '?token=' + token, fileObj);

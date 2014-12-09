@@ -32,8 +32,7 @@ files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', fu
         viewUsers: function(fileObj){
 			// get the batch_id this file belongs to. load that bitch up.
 			filesAPI.findBatch(authInfo.token, fileObj.fileID).success(function(res){
-				console.log(res);
-				//$location.path('/batches/' + res.batchID + '/view/users');
+				$location.path('/batches/' + res.BatchID + '/view/users');
 			});
         }
     };

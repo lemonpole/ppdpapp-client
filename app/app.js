@@ -21,10 +21,10 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 	
 	$provide.constant('apiRoot', apiRootElem.attr('href'));
 	$provide.value('authInfo', {
-//		token: 'k0nXf9nsC8ndoMrjgNZwDb8Lq42rHfET:1417047552017', // set back to undefined once done debugging...
-        token: undefined,
-//		email: 'admin@temple.edu'
-        email: undefined
+		token: 'k0nXf9nsC8ndoMrjgNZwDb8Lq42rHfET:1417047552017', // set back to undefined once done debugging...
+        //token: undefined,
+		email: 'admin@temple.edu'
+        //email: undefined
 	});
 	
 	$animateProvider.classNameFilter(/animate/);
