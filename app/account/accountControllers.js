@@ -1,6 +1,6 @@
 var acct = angular.module('accountControllers', ['accountFactory']);
 
-acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPI', 'authInfo', 'usersAPI', function($scope, $location, accountAPI, authInfo, usersAPI){
+acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPI', 'authInfo', 'usersAPI', 'authFactory', function($scope, $location, accountAPI, authInfo, usersAPI, authFactory){
 	$scope.processing = false;
 	$scope.error = false;
 	
@@ -12,6 +12,7 @@ acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPI', 'authI
 		accountAPI.postLogin($scope.account.email, $scope.account.password).success(function(token){
 			authInfo.token = token;
 			authInfo.email = $scope.account.email;
+            authFactory.rememberSession();
             usersAPI.findByEmail(authInfo.email, authInfo.token).success(function(res) {
                 authInfo.user = res;
                 $location.path('/assignments');

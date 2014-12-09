@@ -17,7 +17,7 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
             { name: 'View', cellTemplate: 'app/assignments/partials/cellTemplate_assignments.html' }
         ]
     };
-    
+
     $scope.refresh = function() {
         $scope.loaded = false;
         $scope.requestFailed = false;
@@ -31,16 +31,16 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
         });
     };
     $scope.refresh();
-    
+
     $scope.gridAssignmentsScope = {
         loadBatch: function(batchObj){
             // redirect to batch viewer page.
-			tablesAPI.find(authInfo.token, batchObj.tablesID).success(function(res){
-            	$location.path('/assignments/' + batchObj.batchID + '/view/' + res.TableName);
+            tablesAPI.find(authInfo.token, batchObj.tablesID).success(function(res){
+                $location.path('/assignments/' + batchObj.batchID + '/view/' + res.TableName);
             });
         }
     };
-    
+
     $scope.gridAssignments.onRegisterApi = function(gridApi){
         $scope.gridApi = gridApi;
         gridApi.selection.on.rowSelectionChanged($scope,function(row){

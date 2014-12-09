@@ -30,7 +30,7 @@ app.config(['$routeProvider', '$provide', '$animateProvider', function($routePro
 	$animateProvider.classNameFilter(/animate/);
 }]);
 
-app.controller('appCtrl', ['$scope', '$location', 'authInfo', function($scope, $location, authInfo){
+app.controller('appCtrl', ['$scope', '$location', 'authInfo', 'authFactory', function($scope, $location, authInfo, authFactory){
     $scope.goto = function(where) {
         $location.path(where);
     };
@@ -56,5 +56,15 @@ app.controller('appCtrl', ['$scope', '$location', 'authInfo', function($scope, $
             return false;
         }
     };
-	// do work
+    $scope.loggedIn = function() {
+        return !!(authInfo.user);
+    };
+    $scope.nameOfUser = function() {
+        return authInfo.user ? (authInfo.user.firstName + ' ' + authInfo.user.lastName) : undefined;
+    };
+    $scope.logOut = function() {
+        authFactory.forgetSession();
+    };
+	// Try to login from remembered session
+    authFactory.loadRememberedSession();
 }]);

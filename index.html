@@ -42,9 +42,9 @@
             </div>
             <!-- Desktop version -->
             <div class="collapse navbar-collapse" id="main-navbar">
-                <div class="navbar-right" style="margin-right: 15px;">
-                    <p class="navbar-text">Signed in as Mark Otto</p>
-                    <button type="button" class="btn btn-default navbar-btn">Log Out</button>
+                <div class="navbar-right" style="margin-right: 15px;" ng-show="loggedIn()">
+                    <p class="navbar-text">Signed in as {{nameOfUser()}}</p>
+                    <button type="button" class="btn btn-default navbar-btn" ng-click="logOut()">Log Out</button>
                 </div>
             </div>
 		</nav>
