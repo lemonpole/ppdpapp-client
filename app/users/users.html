@@ -12,9 +12,18 @@
 			<li><a href="#/users">Users</a></li>
 		</ul>
 		
-		<div class="col-md-10">
+		<div class="col-md-10" ng-class="{transparent: !loaded}">
 			<h1>Users <a href="#/users/create" class="btn btn-default">Create User</a></h1>
             <div ui-grid="gridOptions" class="grid"></div>
+		</div>
+        <div class="connection-problem" ng-class="{concealed: !requestFailed}">
+            <i class="fa fa-warning"></i>
+			<div class="message">There was a problem contacting the server.<br>Please ensure you have a strong connection.</div>
+		</div>
+        <div class="loading-animation" ng-class="{concealed: (loaded || requestFailed)}">
+            <div class="loading-animation-bg">
+                <i class="fa fa-refresh"></i>
+            </div>
 		</div>
 	</div>
 </div>

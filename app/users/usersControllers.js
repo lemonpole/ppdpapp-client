@@ -2,9 +2,16 @@ var users = angular.module('usersControllers', ['usersFactory']);
 
 users.controller('usersCtrl', ['$scope', 'usersAPI', 'authInfo', function($scope, usersAPI, authInfo){
     $scope.gridOptions = {};
+    $scope.loaded = false;
+    $scope.requestFailed = false;
     
     usersAPI.getAll(authInfo.token).success(function(res){
         $scope.gridOptions.data = res;
+        $scope.loaded = true;
+        $scope.requestFailed = false;
+    }).error(function() {
+        $scope.loaded = false;
+        $scope.requestFailed = true;
     });
 }]);
 users.controller('userCreateCtrl', ['$scope', '$location', 'usersAPI', 'authInfo', function($scope, $location, usersAPI, authInfo){
