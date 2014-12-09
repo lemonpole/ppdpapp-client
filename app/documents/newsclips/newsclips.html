@@ -5,7 +5,7 @@
         <div class="grid-button" ng-click="goto('/documents/newsclips/create')" title="Create a new news clip"><i class="fa fa-plus"></i></div>
         <div class="grid-button" ng-click="refresh()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
     </div>
-    <div ui-grid="gridNewsclips" ui-grid-selection ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid"></div>
+    <div external-scopes="external" ui-grid="gridNewsclips" ui-grid-selection ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="grid"></div>
 </div>
 <div class="connection-problem" ng-class="{concealed: !requestFailed}">
     <i class="fa fa-warning"></i>

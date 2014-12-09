@@ -1,23 +1,5 @@
-<!--
-	[x] Newspaper
-	[x] Date
-	[x] Headline
-	[x] Abstract
-	[ ] Executive
-	[ ] Leg
-	[ ] Jud
-	[ ] Sta_Ag
-	[ ] Fed
-	[ ] Local_Govt
-	[ ] Elec
-	[ ] Elderly
-	[ ] Tax
-	[ ] Budget
-	[ ] Int_Group
-	[ ] TypeID
--->
-<div>
-    <h1>Create Batch</h1>
+<div ng-class="{transparent: !loaded}">
+    <div class="grid-heading">Newsclip</div>
     <form role="form" name="form" novalidate>
 		<div class="form-group row"><div class="col-md-12">
             <input type="text" class="form-control" placeholder="Headline" ng-model="Headline" required />
@@ -43,9 +25,18 @@
 		
         <div class="form-group margin-top-xlarge">
             <button type="button" class="btn btn-primary" ng-click="create()" ng-disabled="form.$invalid||processing||!Newspaper">
-                Create
+                Save
                 <i ng-show="processing" class="fa fa-spinner fa-spin"></i>
             </button>
         </div>
     </form>
+</div>
+<div class="connection-problem" ng-class="{concealed: !requestFailed}">
+    <i class="fa fa-warning"></i>
+    <div class="message">There was a problem contacting the server.<br>Please ensure you have a strong connection.</div>
+</div>
+<div class="loading-animation" ng-class="{concealed: (loaded || requestFailed)}">
+    <div class="loading-animation-bg">
+        <i class="fa fa-refresh"></i>
+    </div>
 </div>

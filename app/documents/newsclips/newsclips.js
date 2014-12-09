@@ -20,4 +20,14 @@ nclips.config(['$routeProvider', function($routeProvider){
 			}
 		}
 	});
+	
+	$routeProvider.when('/documents/newsclips/view/:doc_id', {
+		templateUrl	: 'app/documents/newsclips/newsclips_create.html',
+		controller	: 'newsclipsViewCtrl',
+		resolve: {
+			authenticated: function(authFactory){
+				return authFactory.resolveIsLoggedIn();	
+			}
+		}
+	});
 }]);

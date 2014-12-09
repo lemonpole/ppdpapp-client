@@ -1,6 +1,6 @@
 var newsclips = angular.module('newsclipsControllers', ['newsclipsFilters', 'newsclipsFactory', 'batchesFactory']);
 
-newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, $q, newsclipsAPI, authInfo){
+newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', '$location', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, $q, $location, newsclipsAPI, authInfo){
     $scope.loaded = false;
     $scope.requestFailed = false;
     
@@ -12,7 +12,8 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclip
 			{ field: 'ID' },
             { field: 'Headline' },
             { field: 'Abstract' },
-            { name: 'Newsclip Date', field: 'Date' }
+            { name: 'Newsclip Date', field: 'Date' },
+			{ name: 'View', cellTemplate: 'app/documents/newsclips/partials/cellTemplate_newsclips.html' }
         ]
     };
 	
@@ -31,11 +32,17 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclip
 	};
 	$scope.reloadNewsclips();
 	
+	$scope.external = {
+        loadNewsclip: function(newsObj){
+            $location.path('/documents/newsclips/view/' + newsObj.ID);
+        }
+    };
+	
 	$scope.saveRow = function(rowEntity){
 		var promise = newsclipsAPI.update(authInfo.token, rowEntity);
 		$scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
 		promise.success(function(res){
-			console.log(rowEntity);
+			//console.log(rowEntity);
 		});
 	};
 	$scope.gridNewsclips.onRegisterApi = function(gridApi){
@@ -211,6 +218,99 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 	};
 }]);
 newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', '$location', 'authInfo', 'newsclipsAPI', 'newspapersAPI', function($scope, $routeParams, $q, $location, authInfo, newsclipsAPI, newspapersAPI){
+	// Represents the loading state
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+	
+	$scope.dt = new Date();
+    $scope.processing = false;
+	$scope.filters = [
+		{ name: 'Executive', value: 0 },
+		{ name: 'Leg', value: 0 },
+		{ name: 'Jud', value: 0 },
+		{ name: 'Sta_Ag', value: 0 },
+		{ name: 'Fed', value: 0 },
+		{ name: 'Local_Govt', value: 0 },
+		{ name: 'Elec', value: 0 },
+		{ name: 'Elderly', value: 0 },
+		{ name: 'Tax', value: 0 },
+		{ name: 'Budget', value: 0 },
+		{ name: 'Int_Group', value: 0 },
+		{ name: 'TypeID', value: 0 }
+	];
+    
+    $scope.today = function(){
+        $scope.dt = new Date();
+    };
+    $scope.clear = function(){
+        $scope.dt = null;
+    };
+	
+	// call tablesAPI to get table names.
+    newspapersAPI.getAll(authInfo.token).success(function(res){
+		$scope.newspapers = res;
+		$scope.loaded = true;
+            $scope.requestFailed = false;
+    });
+	$scope.create = function(){
+		$scope.processing = true;
+		var newsclipObj = {
+			Headline: $scope.Headline,
+			Abstract: $scope.Abstract,
+			Newspaper: $scope.Newspaper,
+			Date: $scope.dt.getFullYear() + '-' + $scope.dt.getMonth() + '-' + $scope.dt.getDate(),
+			Executive: $scope.convertBoolToInt($scope.filters[0].value),
+			Leg: $scope.convertBoolToInt($scope.filters[1].value),
+			Jud: $scope.convertBoolToInt($scope.filters[2].value),
+			Sta_Ag: $scope.convertBoolToInt($scope.filters[3].value),
+			Fed: $scope.convertBoolToInt($scope.filters[4].value),
+			Local_Govt: $scope.convertBoolToInt($scope.filters[5].value),
+			Elec: $scope.convertBoolToInt($scope.filters[6].value),
+			Elderly: $scope.convertBoolToInt($scope.filters[7].value),
+			Tax: $scope.convertBoolToInt($scope.filters[8].value),
+			Budget: $scope.convertBoolToInt($scope.filters[9].value),
+			Int_Group: $scope.convertBoolToInt($scope.filters[10].value),
+			TypeID: $scope.convertBoolToInt($scope.filters[11].value)
+		};
+		
+		console.log(newsclipObj.Date);
+		newsclipsAPI.create(authInfo.token, newsclipObj).success(function(res){
+			$scope.processing = false;
+			$location.path('/documents/newsclips');
+		});
+	};
+	
+	$scope.convertBoolToInt = function(num){
+		return (num)?1:0;
+	}
+}]);
+newsclips.controller('newsclipsViewCtrl', ['$scope', '$routeParams', '$q', '$location', 'authInfo', 'newsclipsAPI', 'newspapersAPI', function($scope, $routeParams, $q, $location, authInfo, newsclipsAPI, newspapersAPI){
+	// Represents the loading state
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+	
+	newsclipsAPI.find(authInfo.token, $routeParams.doc_id).success(function(res){
+		$scope.Headline = res.Headline;
+		$scope.Abstract = res.Abstract;
+		$scope.Newspaper = res.Newspaper;
+		$scope.dt = new Date(res.Date);
+		$scope.filters[0].value = res.Executive;
+		$scope.filters[1].value = res.Leg;
+		$scope.filters[2].value = res.Jud;
+		$scope.filters[3].value = res.Sta_Ag;
+		$scope.filters[4].value = res.Fed;
+		$scope.filters[5].value = res.Local_Govt;
+		$scope.filters[6].value = res.Elec;
+		$scope.filters[7].value = res.Elderly;
+		$scope.filters[8].value = res.Tax;
+		$scope.filters[9].value = res.Budget;
+		$scope.filters[10].value = res.Int_Group;
+		$scope.filters[11].value = res.TypeID;
+		
+		$scope.loaded = true;
+		$scope.requestFailed = false;
+	});
+	
 	$scope.dt = new Date();
     $scope.processing = false;
 	$scope.filters = [
@@ -242,6 +342,7 @@ newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', '$l
 	$scope.create = function(){
 		$scope.processing = true;
 		var newsclipObj = {
+			ID: $routeParams.doc_id,
 			Headline: $scope.Headline,
 			Abstract: $scope.Abstract,
 			Newspaper: $scope.Newspaper,
@@ -259,9 +360,8 @@ newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', '$l
 			Int_Group: $scope.convertBoolToInt($scope.filters[10].value),
 			TypeID: $scope.convertBoolToInt($scope.filters[11].value)
 		};
-		
-		console.log(newsclipObj.Date);
-		newsclipsAPI.create(authInfo.token, newsclipObj).success(function(res){
+
+		newsclipsAPI.update(authInfo.token, newsclipObj).success(function(res){
 			$scope.processing = false;
 			$location.path('/documents/newsclips');
 		});

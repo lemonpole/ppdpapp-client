@@ -7,6 +7,9 @@ newsclips.factory('newsclipsAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.getAll = function(token){
 		return $http.get(urlBase + '?token=' + token);
 	};
+	dataFactory.find = function(token, doc_id){
+		return $http.get(urlBase + '/' + doc_id + '?token=' + token);
+	};
 	dataFactory.noBatch = function(token){
 		return $http.get(urlBase + '/nobatch?token=' + token);	
 	};
