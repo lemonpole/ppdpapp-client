@@ -1,6 +1,9 @@
 var newsclips = angular.module('newsclipsControllers', ['newsclipsFilters', 'newsclipsFactory', 'batchesFactory']);
 
 newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, $q, newsclipsAPI, authInfo){
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+    
     $scope.gridNewsclips = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -13,7 +16,17 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclip
     };
 	
 	$scope.reloadNewsclips = function(){
-		newsclipsAPI.getAll(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+        $scope.loaded = false;
+        $scope.requestFailed = false;
+        
+		newsclipsAPI.getAll(authInfo.token).success(function(res){
+            $scope.gridNewsclips.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });
 	};
 	$scope.reloadNewsclips();
 	
@@ -31,6 +44,8 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclip
 	};
 }]);
 newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$location', 'newsclipsAPI', 'batchesAPI', 'authInfo', function($scope, $routeParams, $q, $location, newsclipsAPI, batchesAPI, authInfo){
+    $scope.loaded = false;
+    $scope.requestFailed = false;
 	$scope.process_action = $routeParams.action;
 	$scope.processing_action = false;
 	$scope.gridNewsclips = {
@@ -45,15 +60,42 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
     };
 	
 	$scope.reloadNoBatch = function(){
-		newsclipsAPI.noBatch(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+        $scope.loaded = false;
+        $scope.requestFailed = false;
+		newsclipsAPI.noBatch(authInfo.token).success(function(res){
+            $scope.gridNewsclips.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });
 	};
 	$scope.reloadBatchDocs = function(){
-		batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){ $scope.gridNewsclips.data = res; });	
+        $scope.loaded = false;
+        $scope.requestFailed = false;
+		batchesAPI.getDocuments(authInfo.token, batch_id).success(function(res){
+            $scope.gridNewsclips.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });	
 	};
 	
 	var batch_id = $routeParams.batch_id;
 	if(typeof batch_id === 'undefined'){
-		newsclipsAPI.getAll(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+        $scope.loaded = false;
+        $scope.requestFailed = false;
+		newsclipsAPI.getAll(authInfo.token).success(function(res){
+            $scope.gridNewsclips.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });
 	} else {
 		switch($routeParams.action){
 			case 'add':
@@ -101,7 +143,9 @@ newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$lo
     };
 }]);
 newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', 'codesAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI, codesAPI){
-	$scope.gridOptions = {
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+    $scope.gridOptions = {
         columnDefs: [
             { field: 'ID', enableCellEdit: false },
             { field: 'Headline', enableCellEdit: false },
@@ -123,7 +167,16 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 	};
 	
 	$scope.reloadBatchDocs = function(){
-		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){ $scope.gridOptions.data = res; });	
+        $scope.loaded = false;
+        $scope.requestFailed = false;
+		newsclipsAPI.noCode(authInfo.token, $routeParams.batch_id).success(function(res){
+            $scope.gridOptions.data = res;
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+        }).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });	
 	};
 	$scope.reloadBatchDocs();
 	
