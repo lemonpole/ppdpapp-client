@@ -19,6 +19,9 @@ newsclips.factory('newsclipsAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.update = function(token, doc_obj){
 		return $http.put(urlBase + '?token=' + token, doc_obj);
 	};
+	dataFactory.create = function(token, doc_obj){
+		return $http.post(urlBase + '?token=' + token, doc_obj);
+	};
 	
 	return dataFactory;
 }]);

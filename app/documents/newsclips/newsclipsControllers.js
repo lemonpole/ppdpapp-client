@@ -210,7 +210,7 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		});
 	};
 }]);
-newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', 'newspapersAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI, newspapersAPI){
+newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', '$location', 'authInfo', 'newsclipsAPI', 'newspapersAPI', function($scope, $routeParams, $q, $location, authInfo, newsclipsAPI, newspapersAPI){
 	$scope.dt = new Date();
     $scope.processing = false;
 	$scope.filters = [
@@ -240,6 +240,34 @@ newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', 'au
 		$scope.newspapers = res;
     });
 	$scope.create = function(){
-		// yessir.
+		$scope.processing = true;
+		var newsclipObj = {
+			Headline: $scope.Headline,
+			Abstract: $scope.Abstract,
+			Newspaper: $scope.Newspaper,
+			Date: $scope.dt.getFullYear() + '-' + $scope.dt.getMonth() + '-' + $scope.dt.getDate(),
+			Executive: $scope.convertBoolToInt($scope.filters[0].value),
+			Leg: $scope.convertBoolToInt($scope.filters[1].value),
+			Jud: $scope.convertBoolToInt($scope.filters[2].value),
+			Sta_Ag: $scope.convertBoolToInt($scope.filters[3].value),
+			Fed: $scope.convertBoolToInt($scope.filters[4].value),
+			Local_Govt: $scope.convertBoolToInt($scope.filters[5].value),
+			Elec: $scope.convertBoolToInt($scope.filters[6].value),
+			Elderly: $scope.convertBoolToInt($scope.filters[7].value),
+			Tax: $scope.convertBoolToInt($scope.filters[8].value),
+			Budget: $scope.convertBoolToInt($scope.filters[9].value),
+			Int_Group: $scope.convertBoolToInt($scope.filters[10].value),
+			TypeID: $scope.convertBoolToInt($scope.filters[11].value)
+		};
+		
+		console.log(newsclipObj.Date);
+		newsclipsAPI.create(authInfo.token, newsclipObj).success(function(res){
+			$scope.processing = false;
+			$location.path('/documents/newsclips');
+		});
 	};
+	
+	$scope.convertBoolToInt = function(num){
+		return (num)?1:0;
+	}
 }]);

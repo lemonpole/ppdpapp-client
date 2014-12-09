@@ -21,7 +21,7 @@ factories.factory('authFactory', ['$q', '$location', 'authInfo', 'usersAPI',
                 var email = localStorage.getItem('email');
                 var token = localStorage.getItem('token');
                 if (email && token && email !== 'undefined' && token !== 'undefined') {
-                    console.log('email and token', email, token);
+                    //console.log('email and token', email, token);
                     authInfo.token = token;
                     authInfo.email = email;
                     usersAPI.findByEmail(authInfo.email, authInfo.token).success(function (res) {
