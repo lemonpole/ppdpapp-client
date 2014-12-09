@@ -62,6 +62,7 @@ files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI'
 	
 	$scope.onFileSelect = function($files){
 		$scope.processing = true;
+		var file = $files[0];
 		var fileObj = {
 			name: $scope.name,
 			dateAdded: new Date()
@@ -73,21 +74,11 @@ files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI'
 			tablesID: $scope.batch_type.ID,
 		};
 		
-		for(var i=0; i<$files.length; i++){
-			var file = $files[i];
-			$upload.upload({
-				url: 'http://js.localhost/ppdpapp-client/#/files/create',
-				data: {
-					data: file,
-					fileObj: fileObj,
-					batchObj: batchObj
-				}
-			}).progress(function(evt){
-				$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-			}).success(function(data, status, headers, config){
-				$scope.processing = false;
-				$location.path('/files/');
-			});
-		}
+		filesAPI.create(authInfo.token, file, fileObj, batchObj).progress(function(evt){
+			$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+		}).success(function(data, status, headers, config){
+			$scope.processing = false;
+			$location.path('/files/');
+		});
 	};
 }]);
