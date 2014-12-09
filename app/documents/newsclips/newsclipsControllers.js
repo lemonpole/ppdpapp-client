@@ -17,12 +17,11 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclip
 	};
 	$scope.reloadNewsclips();
 	
-	$scope.saveRow = function( rowEntity ) {
-		// create a fake promise - normally you'd use the promise returned by $http or $resource
-		var promise = newsclipsAPI.getAll(authInfo.token);
-		$scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity, promise);
+	$scope.saveRow = function(rowEntity){
+		var promise = newsclipsAPI.update(authInfo.token, rowEntity);
+		$scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
 		promise.success(function(res){
-			console.log('yessir');
+			console.log(rowEntity);
 		});
 	};
 	$scope.gridNewsclips.onRegisterApi = function(gridApi){
