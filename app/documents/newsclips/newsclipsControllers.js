@@ -1,6 +1,6 @@
 var newsclips = angular.module('newsclipsControllers', ['newsclipsFilters', 'newsclipsFactory', 'batchesFactory']);
 
-newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, newsclipsAPI, authInfo){
+newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', '$q', 'newsclipsAPI', 'authInfo', function($scope, $routeParams, $q, newsclipsAPI, authInfo){
     $scope.gridNewsclips = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -12,7 +12,23 @@ newsclips.controller('newsclipsCtrl', ['$scope', '$routeParams', 'newsclipsAPI',
         ]
     };
 	
-	newsclipsAPI.getAll(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+	$scope.reloadNewsclips = function(){
+		newsclipsAPI.getAll(authInfo.token).success(function(res){ $scope.gridNewsclips.data = res; });
+	};
+	$scope.reloadNewsclips();
+	
+	$scope.saveRow = function(rowEntity){
+		var promise = newsclipsAPI.update(authInfo.token, rowEntity);
+		$scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, promise);
+		promise.success(function(res){
+			console.log(rowEntity);
+		});
+	};
+	$scope.gridNewsclips.onRegisterApi = function(gridApi){
+		//set gridApi on scope
+		$scope.gridApi = gridApi;
+		gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+	};
 }]);
 newsclips.controller('newsclipsBatchCtrl', ['$scope', '$routeParams', '$q', '$location', 'newsclipsAPI', 'batchesAPI', 'authInfo', function($scope, $routeParams, $q, $location, newsclipsAPI, batchesAPI, authInfo){
 	$scope.process_action = $routeParams.action;
