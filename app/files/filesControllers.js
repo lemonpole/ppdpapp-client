@@ -30,9 +30,11 @@ files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', fu
 	
 	$scope.gridScope = {
         viewUsers: function(fileObj){
-			console.log(fileObj);
 			// get the batch_id this file belongs to. load that bitch up.
-            //$location.path('/batches/' + batchObj.batchID + '/view/users');   
+			filesAPI.findBatch(authInfo.token, fileObj.fileID).success(function(res){
+				console.log(res);
+				//$location.path('/batches/' + res.batchID + '/view/users');
+			});
         }
     };
 }]);
