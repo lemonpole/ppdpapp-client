@@ -210,3 +210,36 @@ newsclips.controller('newsclipsCodeCtrl', ['$scope', '$routeParams', '$q', 'auth
 		});
 	};
 }]);
+newsclips.controller('newsclipsCreateCtrl', ['$scope', '$routeParams', '$q', 'authInfo', 'newsclipsAPI', 'newspapersAPI', function($scope, $routeParams, $q, authInfo, newsclipsAPI, newspapersAPI){
+	$scope.dt = new Date();
+    $scope.processing = false;
+	$scope.filters = [
+		{ name: 'Executive', value: 0 },
+		{ name: 'Leg', value: 0 },
+		{ name: 'Jud', value: 0 },
+		{ name: 'Sta_Ag', value: 0 },
+		{ name: 'Fed', value: 0 },
+		{ name: 'Local_Govt', value: 0 },
+		{ name: 'Elec', value: 0 },
+		{ name: 'Elderly', value: 0 },
+		{ name: 'Tax', value: 0 },
+		{ name: 'Budget', value: 0 },
+		{ name: 'Int_Group', value: 0 },
+		{ name: 'TypeID', value: 0 }
+	];
+    
+    $scope.today = function(){
+        $scope.dt = new Date();
+    };
+    $scope.clear = function(){
+        $scope.dt = null;
+    };
+	
+	// call tablesAPI to get table names.
+    newspapersAPI.getAll(authInfo.token).success(function(res){
+		$scope.newspapers = res;
+    });
+	$scope.create = function(){
+		// yessir.
+	};
+}]);

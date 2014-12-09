@@ -55,3 +55,13 @@ factories.factory('codesAPI', ['$http', 'apiRoot', function($http, apiRoot){
     
 	return dataFactory;
 }]);
+factories.factory('newspapersAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/Newspapers';
+	
+	dataFactory.getAll = function(token){
+		return $http.get(urlBase + '?token=' + token);
+	};
+    
+	return dataFactory;
+}]);
