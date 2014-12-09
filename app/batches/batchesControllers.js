@@ -162,7 +162,11 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
     };
 }]);
 batches.controller('batchCreateCtrl', ['$scope', '$location', 'tablesAPI', 'batchesAPI', 'authInfo', function($scope, $location, tablesAPI, batchesAPI, authInfo){
-    $scope.dt = new Date();
+    // Represents the loading state
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+	
+	$scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
     $scope.batch_type_dd_status = false;
@@ -178,6 +182,8 @@ batches.controller('batchCreateCtrl', ['$scope', '$location', 'tablesAPI', 'batc
     // call tablesAPI to get table names.
     tablesAPI.getAll(authInfo.token).success(function(res){
         $scope.batch_type_dd_items = res;
+		$scope.loaded = true;
+		$scope.requestFailed = false;
     });
     $scope.setBatchType = function(tableObj){
         $scope.batch_type = tableObj;

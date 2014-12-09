@@ -8,6 +8,7 @@ files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', fu
         multiSelect: true,
         columnDefs: [
             { name: 'ID', field: 'fileID' },
+			{ field: 'name' },
             { name: 'Creator', field: 'creator' },
             { name: 'dateAdded', field: 'dateAdded' },
             { name: 'View', cellTemplate: 'app/files/partials/cellTemplate_files.html' }
@@ -38,6 +39,10 @@ files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', fu
     };
 }]);
 files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI', 'tablesAPI', 'batchesAPI', 'authInfo', function($scope, $location, $upload, filesAPI, tablesAPI, batchesAPI, authInfo){
+	// Represents the loading state
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+	
 	$scope.dt = new Date();
     $scope.minDate = new Date();
     $scope.processing = false;
@@ -54,6 +59,8 @@ files.controller('fileCreateCtrl', ['$scope', '$location', '$upload', 'filesAPI'
     // call tablesAPI to get table names.
     tablesAPI.getAll(authInfo.token).success(function(res){
         $scope.batch_type_dd_items = res;
+		$scope.loaded = true;
+		$scope.requestFailed = false;
     });
     $scope.setBatchType = function(tableObj){
         $scope.batch_type = tableObj;
