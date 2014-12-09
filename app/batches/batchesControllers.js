@@ -12,6 +12,7 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
         multiSelect: true,
         columnDefs: [
             { name: 'Created By', field: 'creator' },
+			{ field: 'name' },
             { name: 'Date Added', field: 'dateAdded' },
             { name: 'Date Due', field: 'dateDue' },
             { name: 'View', cellTemplate: 'app/batches/partials/cellTemplate_batches.html' }
@@ -21,7 +22,7 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
 	$scope.reloadBatches = function(){
         $scope.loaded = false;
         $scope.requestFailed = false;
-		batchesAPI.getAll(authInfo.token).success(function(res){
+		batchesAPI.noFiles(authInfo.token).success(function(res){
 			$scope.gridOptions.data = res;
             $scope.loaded = true;
             $scope.requestFailed = false;

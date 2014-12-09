@@ -7,6 +7,9 @@ batches.factory('batchesAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.getAll = function(token){
 		return $http.get(urlBase + '?token=' + token);
 	};
+	dataFactory.noFiles = function(token){
+		return $http.get(urlBase + '/nofiles?token=' + token);
+	};
 	dataFactory.find = function(token, batch_id){
 		return $http.get(urlBase + '/' + batch_id + '?token=' + token);
 	};
