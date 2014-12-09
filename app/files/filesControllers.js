@@ -1,18 +1,40 @@
 var files = angular.module('filesControllers', ['filesFactory']);
 
-files.controller('filesCtrl', ['$scope', 'filesAPI', 'authInfo', function($scope, filesAPI, authInfo){
-    $scope.gridOptions = {};
+files.controller('filesCtrl', ['$scope', '$location', 'filesAPI', 'authInfo', function($scope, $location, filesAPI, authInfo){
+    $scope.gridOptions = {
+        enableSorting: true,
+        enableRowSelection: true,
+        enableSelectAll: true,
+        multiSelect: true,
+        columnDefs: [
+            { name: 'ID', field: 'fileID' },
+            { name: 'Creator', field: 'creator' },
+            { name: 'dateAdded', field: 'dateAdded' },
+            { name: 'View', cellTemplate: 'app/files/partials/cellTemplate_files.html' }
+        ]
+    };
     $scope.loaded = false;
     $scope.requestFailed = false;
     
-    filesAPI.getAll(authInfo.token).success(function(res){
-        $scope.gridOptions.data = res;
-        $scope.loaded = true;
-        $scope.requestFailed = false;
-    }).error(function() {
-        $scope.loaded = false;
-        $scope.requestFailed = true;
-    });
+    $scope.reloadFiles = function(){
+		filesAPI.getAll(authInfo.token).success(function(res){
+			$scope.gridOptions.data = res;
+			$scope.loaded = true;
+			$scope.requestFailed = false;
+		}).error(function() {
+			$scope.loaded = false;
+			$scope.requestFailed = true;
+		});
+	};
+	$scope.reloadFiles();
+	
+	$scope.gridScope = {
+        viewUsers: function(fileObj){
+			console.log(fileObj);
+			// get the batch_id this file belongs to. load that bitch up.
+            //$location.path('/batches/' + batchObj.batchID + '/view/users');   
+        }
+    };
 }]);
 files.controller('fileCreateCtrl', ['$scope', 'filesAPI', function($scope, filesAPI){
 }]);

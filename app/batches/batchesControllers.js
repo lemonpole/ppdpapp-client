@@ -64,7 +64,7 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
 batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', '$q', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, $q, batchesAPI,  usersAPI, authInfo){
     $scope.batchUsersGridApi = null;
     $scope.usersGridApi = null;
-    scope.loaded = false;
+    $scope.loaded = false;
     $scope.requestFailed = false;
     
     var columnDefs = [
@@ -86,26 +86,26 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
     };
 	
     $scope.reloadBatchUsers = function(){
-        scope.loaded = false;
+        $scope.loaded = false;
         $scope.requestFailed = false;
 		batchesAPI.getUsers(authInfo.token, $routeParams.batch_id).success(function(res){
 			$scope.gridBatchUsersOptions.data = res;
-            scope.loaded = true;
+            $scope.loaded = true;
             $scope.requestFailed = false;
 		}).error(function() {
-            scope.loaded = false;
+            $scope.loaded = false;
             $scope.requestFailed = true;
         });
 	};
 	$scope.reloadUsers = function(){
-        scope.loaded = false;
+        $scope.loaded = false;
         $scope.requestFailed = false;
 		usersAPI.getAll(authInfo.token).success(function(res){
 			$scope.gridUsersOptions.data = res;
-            scope.loaded = true;
+            $scope.loaded = true;
             $scope.requestFailed = false;
 		}).error(function() {
-            scope.loaded = false;
+            $scope.loaded = false;
             $scope.requestFailed = true;
         });
 	};
