@@ -37,7 +37,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/"><img src="images/logo_temple.png" alt="TU" /></a>
+                <a class="navbar-brand" href="#/"><img src="images/logo_temple.png" alt="TU" style="height: 16px; margin-top: 3px;" /></a>
             </div>
             <!-- Desktop version -->
             <div class="collapse navbar-collapse" id="main-navbar">
@@ -50,15 +50,12 @@
 		
 		<!-- Main -->
         <ul id="navigation">
-            <li><a href="#/assignments">Assignments</a></li>
-            <li><a href="#/documents">Documents</a>
-                <ul>
-                    <li><a href="#/documents/newsclips">Newsclips</a></li>
-                </ul>
-            </li>
-            <li><a href="#/batches">Batches</a></li>
-            <li><a href="#/files">Files</a></li>
-            <li><a href="#/users">Users</a></li>
+            <li><a href="#/assignments"><i class="fa fa-refresh"></i> Assignments</a></li>
+            <li class="group"><a href="#/documents"><i class="fa fa-archive"></i> Documents</a></li>
+            <li class="indented last"><a href="#/documents/newsclips"><i class="fa fa-newspaper-o"></i> Newsclips</a></li>
+            <li><a href="#/batches"><i class="fa fa-folder"></i> Batches</a></li>
+            <li><a href="#/files"><i class="fa fa-file"></i> Files</a></li>
+            <li><a href="#/users"><i class="fa fa-user"></i> Users</a></li>
 		</ul>
 		<div id="content" class="animate fader" ng-view></div>
 		

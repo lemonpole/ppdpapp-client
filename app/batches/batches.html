@@ -1,6 +1,6 @@
 <div ng-class="{transparent: !loaded}">
     <h1>Batches <a href="#/batches/create" class="btn btn-default">Create Batch</a></h1>
-    <div external-scopes="gridScope" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+    <div external-scopes="gridScope" ui-grid="gridOptions" ui-grid-cellnav ui-grid-selection class="grid"></div>
 
     <button type="button" class="btn btn-primary" ng-click="deleteSelected()" ng-disabled="processing">
         Delete Batch(es)

@@ -1,6 +1,6 @@
 <div ng-class="{transparent: !loaded}">
     <h1>Files <a href="#/files/create" class="btn btn-default">Upload File</a></h1>
-    <div ui-grid="gridOptions" class="grid"></div>
+    <div ui-grid="gridOptions" ui-grid-cellnav class="grid"></div>
 </div>
 <div class="connection-problem" ng-class="{concealed: !requestFailed}">
     <i class="fa fa-warning"></i>
