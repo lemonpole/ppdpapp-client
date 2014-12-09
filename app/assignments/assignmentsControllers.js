@@ -1,6 +1,9 @@
 var acct = angular.module('assignmentsControllers', ['assignmentsFactory', 'ui.grid.selection']);
 
 acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'tablesAPI', 'authInfo', function($scope, $location, assignmentsAPI, tablesAPI, authInfo){
+    // Represents the loading state
+    $scope.loaded = false;
+    $scope.requestFailed = false;
     // http://ui-grid.info/docs/#/tutorial/205_row_editable
     // http://ui-grid.info/docs/#/tutorial/215_paging
     $scope.gridAssignments = {
@@ -17,6 +20,11 @@ acct.controller('assignmentsCtrl', ['$scope', '$location', 'assignmentsAPI', 'ta
     
     assignmentsAPI.getAll(authInfo.token).success(function(res){
         $scope.gridAssignments.data = res;
+        $scope.loaded = true;
+        $scope.requestFailed = false;
+    }).error(function(){
+        $scope.loaded = false;
+        $scope.requestFailed = true;
     });
     
     $scope.gridAssignmentsScope = {

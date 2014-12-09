@@ -1,6 +1,10 @@
 var batches = angular.module('batchesControllers', ['batchesFactory', 'usersFactory']);
 
 batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 'tablesAPI', 'authInfo', function($scope, $location, $q, batchesAPI, tablesAPI, authInfo){
+    // Represents the loading state
+    $scope.loaded = false;
+    $scope.requestFailed = false;
+    
     $scope.gridOptions = {
         enableSorting: true,
         enableRowSelection: true,
@@ -17,7 +21,12 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
 	$scope.reloadBatches = function(){
 		batchesAPI.getAll(authInfo.token).success(function(res){
 			$scope.gridOptions.data = res;
-		});
+            $scope.loaded = true;
+            $scope.requestFailed = false;
+		}).error(function() {
+            $scope.loaded = false;
+            $scope.requestFailed = true;
+        });
 	};
 	$scope.reloadBatches();
     
@@ -55,6 +64,8 @@ batches.controller('batchesCtrl', ['$scope', '$location', '$q', 'batchesAPI', 't
 batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams', '$q', 'batchesAPI', 'usersAPI', 'authInfo', function($scope, $location, $routeParams, $q, batchesAPI,  usersAPI, authInfo){
     $scope.batchUsersGridApi = null;
     $scope.usersGridApi = null;
+    scope.loaded = false;
+    $scope.requestFailed = false;
     
     var columnDefs = [
         { field: 'email' },
@@ -75,14 +86,28 @@ batches.controller('batchViewUsersCtrl', ['$scope', '$location', '$routeParams',
     };
 	
     $scope.reloadBatchUsers = function(){
+        scope.loaded = false;
+        $scope.requestFailed = false;
 		batchesAPI.getUsers(authInfo.token, $routeParams.batch_id).success(function(res){
 			$scope.gridBatchUsersOptions.data = res;
-		});
+            scope.loaded = true;
+            $scope.requestFailed = false;
+		}).error(function() {
+            scope.loaded = false;
+            $scope.requestFailed = true;
+        });
 	};
 	$scope.reloadUsers = function(){
+        scope.loaded = false;
+        $scope.requestFailed = false;
 		usersAPI.getAll(authInfo.token).success(function(res){
 			$scope.gridUsersOptions.data = res;
-		});
+            scope.loaded = true;
+            $scope.requestFailed = false;
+		}).error(function() {
+            scope.loaded = false;
+            $scope.requestFailed = true;
+        });
 	};
     $scope.reloadBatchUsers();
     $scope.reloadUsers();
