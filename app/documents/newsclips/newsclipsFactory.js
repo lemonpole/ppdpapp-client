@@ -7,6 +7,9 @@ newsclips.factory('newsclipsAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	dataFactory.getAll = function(token){
 		return $http.get(urlBase + '?token=' + token);
 	};
+	dataFactory.find = function(token, doc_id){
+		return $http.get(urlBase + '/' + doc_id + '?token=' + token);
+	};
 	dataFactory.noBatch = function(token){
 		return $http.get(urlBase + '/nobatch?token=' + token);	
 	};
@@ -18,6 +21,9 @@ newsclips.factory('newsclipsAPI', ['$http', 'apiRoot', function($http, apiRoot){
 	};
 	dataFactory.update = function(token, doc_obj){
 		return $http.put(urlBase + '?token=' + token, doc_obj);
+	};
+	dataFactory.create = function(token, doc_obj){
+		return $http.post(urlBase + '?token=' + token, doc_obj);
 	};
 	
 	return dataFactory;

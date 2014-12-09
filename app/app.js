@@ -42,7 +42,7 @@ app.controller('appCtrl', ['$scope', '$location', 'authInfo', 'authFactory', fun
         if (!roleName) return false;
         else roleName = roleName.toLowerCase().trim();
         
-        console.log('role name was', roleName);
+        //console.log('role name was', roleName);
         if (roleName === "researcher") {
             return (where.indexOf("/assignments") === 0);
         } else if (roleName === "sr. researcher") {

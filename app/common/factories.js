@@ -21,7 +21,7 @@ factories.factory('authFactory', ['$q', '$location', 'authInfo', 'usersAPI',
                 var email = localStorage.getItem('email');
                 var token = localStorage.getItem('token');
                 if (email && token && email !== 'undefined' && token !== 'undefined') {
-                    console.log('email and token', email, token);
+                    //console.log('email and token', email, token);
                     authInfo.token = token;
                     authInfo.email = email;
                     usersAPI.findByEmail(authInfo.email, authInfo.token).success(function (res) {
@@ -99,17 +99,26 @@ factories.factory('tablesAPI', ['$http', 'apiRoot',
 
         return dataFactory;
 }]);
-factories.factory('codesAPI', ['$http', 'apiRoot',
-    function ($http, apiRoot) {
-        var dataFactory = {};
-        var urlBase = apiRoot + '/codes';
-
-        dataFactory.getAll = function (token, table_name) {
-            return $http.get(urlBase + '/' + table_name + '?token=' + token);
-        };
-        dataFactory.search = function (token, table_name, query) {
-            return $http.get(urlBase + '/' + table_name + '/search/?query=' + query + '&token=' + token);
-        };
-
-        return dataFactory;
+factories.factory('codesAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/codes';
+	
+	dataFactory.getAll = function(token, table_name){
+		return $http.get(urlBase + '/' + table_name + '?token=' + token);
+	};
+	dataFactory.search = function(token, table_name, query){
+		return $http.get(urlBase + '/' + table_name + '/search/?query=' + query + '&token=' + token);
+	};
+    
+	return dataFactory;
+}]);
+factories.factory('newspapersAPI', ['$http', 'apiRoot', function($http, apiRoot){
+	var dataFactory = {};
+	var urlBase = apiRoot + '/Newspapers';
+	
+	dataFactory.getAll = function(token){
+		return $http.get(urlBase + '?token=' + token);
+	};
+    
+	return dataFactory;
 }]);
