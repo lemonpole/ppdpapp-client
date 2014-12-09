@@ -15,7 +15,7 @@
                 <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
             </div>
             <div class="col-md-9"><div class="row">
-                <label ng-repeat="filter in filters" class="col-md-2"><input type="checkbox" ng-model="filter.value" value="1" /> {{filter.name}}</label>
+                <label ng-repeat="filter in filters" class="col-md-2"><input type="checkbox" ng-model="filter.value" value="1" ng-checked="filter.value == 1" /> {{filter.name}}</label>
 			</div></div>
         </div>
 
