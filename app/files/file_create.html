@@ -1,0 +1,57 @@
+<div ng-class="{transparent: !loaded}">
+    <h1>Upload File</h1>
+    <form role="form" name="form" novalidate>
+		<div class="form-group row"><div class="col-md-12">
+            <input type="text" class="form-control" placeholder="Give the File a Name" ng-model="name" required />
+        </div></div>
+		
+		<div class="form-group row">
+            <div class="col-md-3">
+                <datepicker ng-model="dt" show-weeks="false" min-date="minDate" class="well well-sm margin-bottom-xsmall"></datepicker>
+                <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+                <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+            </div>
+            <div class="col-md-8">
+                <pre>Selected <strong>due date</strong> is: <em>{{dt | date:'fullDate' }}</em></pre>
+            </div>
+        </div>
+		
+		<div class="form-group row"><div class="col-md-12">
+            <div class="btn-group" dropdown is-open="batch_type_dd_status">
+                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-click='batch_type_dd_status=!batch_type_dd_status'>
+                    {{batch_type.TableTitle | isUndefined:'Select Batch Type'}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="choice in batch_type_dd_items">
+                        <a href ng-click="setBatchType(choice)">{{choice.TableTitle}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div></div>
+		
+		<div class="row margin-top-large">
+			<div class="col-md-6">
+				<progressbar value="progress"></progressbar>
+			</div>
+		</div>
+		
+		<div class="form-group row">
+			<div class="col-md-12">
+				<span class="btn btn-success btn-file btn-lg" ng-disabled="form.$invalid||processing||!batch_type.TableTitle">
+					<span class="glyphicon glyphicon-plus"></span> Select file and Upload
+					<input type="file" ng-file-select="onFileSelect($files)" />
+					<i ng-show="processing" class="fa fa-spinner fa-spin"></i>
+				</span>
+			</div>
+		</div>
+    </form>
+</div>
+<div class="connection-problem" ng-class="{concealed: !requestFailed}">
+    <i class="fa fa-warning"></i>
+    <div class="message">There was a problem contacting the server.<br>Please ensure you have a strong connection.</div>
+</div>
+<div class="loading-animation" ng-class="{concealed: (loaded || requestFailed)}">
+    <div class="loading-animation-bg">
+        <i class="fa fa-refresh"></i>
+    </div>
+</div>

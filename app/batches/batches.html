@@ -1,0 +1,18 @@
+<div ng-class="{transparent: !loaded}">
+    <div class="grid-heading">Batches</div>
+    <div class="grid-buttons">
+        <div class="grid-button" ng-click="reloadBatches()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
+        <div class="grid-button" ng-click="deleteSelected()" ng-class="{disabled: processing}" title="Delete batches"><i class="fa fa-minus"></i></div>
+        <div class="grid-button" ng-click="goto('/batches/create')" title="Create a new batch"><i class="fa fa-plus"></i></div>
+    </div>
+    <div ui-grid="gridOptions" external-scopes="gridScope" ui-grid-cellnav ui-grid-selection class="grid"></div>
+</div>
+<div class="connection-problem" ng-class="{concealed: !requestFailed}">
+    <i class="fa fa-warning"></i>
+    <div class="message">There was a problem contacting the server.<br>Please ensure you have a strong connection.</div>
+</div>
+<div class="loading-animation" ng-class="{concealed: (loaded || requestFailed)}">
+    <div class="loading-animation-bg">
+        <i class="fa fa-refresh"></i>
+    </div>
+</div>

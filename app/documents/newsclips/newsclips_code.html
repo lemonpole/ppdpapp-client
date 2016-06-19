@@ -1,0 +1,18 @@
+<div ng-class="{transparent: !loaded}">
+    <div class="grid-heading">Newsclips</div>
+    <div class="grid-buttons">
+        <div class="grid-button" ng-show="process_action" ng-click="codeDocs()" ng-class="{disabled: processing}"><i class="fa fa-plus"></i> Add Codes</div>
+        <div class="grid-button" ng-show="has_file" ng-click="goto('/documents/newsclips/create')" title="Create a new news clip"><i class="fa fa-plus"></i></div>
+        <div class="grid-button" ng-click="reloadBatchDocs()" title="Refresh the list"><i class="fa fa-refresh"></i></div>
+    </div>
+    <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="grid"></div>
+</div>
+<div class="connection-problem" ng-class="{concealed: !requestFailed}">
+    <i class="fa fa-warning"></i>
+    <div class="message">There was a problem contacting the server.<br>Please ensure you have a strong connection.</div>
+</div>
+<div class="loading-animation" ng-class="{concealed: (loaded || requestFailed)}">
+    <div class="loading-animation-bg">
+        <i class="fa fa-refresh"></i>
+    </div>
+</div>

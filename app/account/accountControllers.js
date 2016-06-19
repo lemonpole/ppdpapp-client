@@ -1,6 +1,6 @@
 var acct = angular.module('accountControllers', ['accountFactory']);
 
-acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPIFactory', 'authInfo', function($scope, $location, accountAPIFactory, authInfo){
+acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPI', 'authInfo', 'usersAPI', 'authFactory', function($scope, $location, accountAPI, authInfo, usersAPI, authFactory){
 	$scope.processing = false;
 	$scope.error = false;
 	
@@ -9,11 +9,18 @@ acct.controller('accountLoginCtrl', ['$scope', '$location', 'accountAPIFactory',
 	};
 	$scope.login = function(){
 		$scope.processing = true;
-		
-		accountAPIFactory.postLogin($scope.account.email, $scope.account.password).success(function(token){
+		accountAPI.postLogin($scope.account.email, $scope.account.password).success(function(token){
 			authInfo.token = token;
 			authInfo.email = $scope.account.email;
-			$location.path('/');
+            authFactory.rememberSession();
+            usersAPI.findByEmail(authInfo.email, authInfo.token).success(function(res) {
+                authInfo.user = res;
+                $location.path('/assignments');
+                console.log(authInfo, 'wooooo');
+            }).error(function(error) {
+                alert('Could not login successfully. Please try again.');
+                $scope.error = error;
+            });
 		}).error(function(error){
 			$scope.error = error;
 		}).finally(function(){
